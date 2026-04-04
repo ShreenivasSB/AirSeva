@@ -137,8 +137,6 @@ The app will open at `http://localhost:8501`
 
 ## 🖼️ Screenshots
 
-## 🖼️ Screenshots
-
 ![Main App](assets/screenshot1.png)
 
 ![AQI Results](assets/screenshot2.png)
