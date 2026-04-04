@@ -1,0 +1,23 @@
+# Environment variables — NEVER commit this
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Model file (large binary — optional to gitignore)
+# models/*.pkl
+
+# Streamlit cache
+.streamlit/
+
+# OS files
+.DS_Store
+Thumbs.db
+# Large data files — too big for GitHub
+data/station_hour.csv
+data/station_day.csv
+data/city_hour.csv
+.venv/ 
+.vscode/ 

@@ -1,0 +1,31 @@
+# =============================================
+# requirements.txt — Air Quality Health Risk Prediction System
+# Compatible with Python 3.10+
+# =============================================
+
+# --- Web App Framework ---
+streamlit==1.35.0
+
+# --- Machine Learning ---
+scikit-learn==1.5.0
+
+# --- Data Manipulation ---
+pandas==2.2.2
+numpy==1.26.4
+
+# --- Model Serialisation ---
+joblib==1.4.2
+
+# --- HTTP Requests ---
+requests==2.32.3
+
+# --- Environment Variables ---
+python-dotenv==1.0.1
+
+# --- Visualisation ---
+plotly==5.22.0
+folium==0.17.0
+streamlit-folium==0.21.0
+
+# --- GPS / Browser JS Eval ---
+streamlit-js-eval==0.1.7
