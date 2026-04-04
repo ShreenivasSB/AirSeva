@@ -137,21 +137,23 @@ The app will open at `http://localhost:8501`
 
 ## 🖼️ Screenshots
 
-> _Screenshots will be added after Streamlit Cloud deployment._
+## 🖼️ Screenshots
 
-| View | Description |
-|---|---|
-| 📍 Location Detection | GPS / city search UI |
-| 👤 Health Profile Form | Vulnerability score calculator |
-| 📊 AQI Dashboard | Live pollutant readings + WHO limits chart |
-| 📥 Downloadable Report | Sample .txt health report |
+![Main App](assets/screenshot1.png)
+
+![AQI Results](assets/screenshot2.png)
+
+![Health Prediction](assets/screenshot3.png)
+
+![WHO Chart](assets/screenshot4.png)
+
+![Health Report](assets/screenshot5.png)
 
 ---
 
 ## 🌐 Live Demo
 
-> 🔗 **[Live App on Streamlit Cloud](#)** ← _Link will be updated after deployment_
-
+> 🔗 **[Live App on Streamlit Cloud](https://air-quality-health-risk-prediction-bqqrpvhkrcd6wxhhuwqlwx.streamlit.app)**
 ---
 
 ## 👨‍💻 Author
