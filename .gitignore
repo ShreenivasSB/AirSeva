@@ -21,3 +21,6 @@ data/station_day.csv
 data/city_hour.csv
 .venv/ 
 .vscode/ 
+check_data.py 
+check_encoding.py 
+check_model.py 
