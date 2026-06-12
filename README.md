@@ -226,6 +226,45 @@ involved in air quality awareness and public health response:
 
 ---
 
+## Problem Statement
+
+How might we use AI to provide accessible, real-time, and 
+location-specific air quality health advisories so that 
+communities across India — especially vulnerable groups — 
+can take timely precautions and become more resilient to 
+air pollution?
+
+## Impact Statement
+
+AirSeva empowers individuals and communities to make informed, 
+health-conscious decisions based on real-time air quality data 
+across 26 Indian cities. By translating raw pollutant data into 
+clear, actionable advisories, it bridges the gap between 
+complex environmental monitoring and everyday public health 
+behavior.
+
+**Who benefits:**
+- **Citizens** gain immediate, easy-to-understand guidance on 
+  outdoor activity safety.
+- **Vulnerable groups** (children, elderly, asthma/COPD patients) 
+  receive tailored precautionary advice during high-pollution periods.
+- **ASHA workers and health volunteers** get a reliable reference 
+  tool to support community health awareness efforts.
+- **Urban local bodies** can use aggregated trends to inform 
+  localized public health advisories.
+
+**What changes:**
+- Reduces the gap between AQI data availability and public 
+  understanding/action.
+- Encourages proactive health behavior (e.g., mask usage, 
+  reduced outdoor exposure) during poor air quality days.
+- Supports India's broader sustainability goals by increasing 
+  public awareness of air quality as a health and environmental 
+  issue (aligned with SDG 3 - Good Health & Well-being, and 
+  SDG 11 - Sustainable Cities & Communities).
+
+---
+
 ## 🏙️ Supported Indian Cities (26)
 
 AirSeva tracks and snaps location queries to these 26 major cities:
