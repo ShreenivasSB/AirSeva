@@ -145,6 +145,64 @@ AirSeva partitions its logic across 4 distinct autonomous agents:
 
 ---
 
+## Responsible AI Considerations
+
+AirSeva is designed with responsible AI principles 
+embedded across its 4-agent pipeline, in line with 
+Section 7 guidelines.
+
+### Fairness
+- Health advisories are benchmarked against WHO 2021 
+  Air Quality Guidelines, ensuring the same global 
+  health standard is applied regardless of city tier.
+- Coverage spans 26 Indian cities across metro, 
+  Tier-2, and Tier-3 categories, avoiding metro-centric 
+  bias common in existing AQI tools that focus only on 
+  Delhi/Mumbai/Bengaluru.
+- The ML prediction model is trained on pooled 
+  multi-city data, so advisory logic is not skewed 
+  toward any single region's pollution profile.
+
+### Transparency
+- The system exposes its reasoning at every stage: 
+  the Random Forest model's AQI prediction is shown 
+  alongside the raw input pollutant data (PM2.5, PM10, 
+  NO2, etc.) used to generate it.
+- The Gemini Advisory Agent's recommendations are 
+  presented as generated guidance, not as black-box 
+  output — users can see which AQI category and city 
+  data informed the advisory.
+- Agent roles (data fetch, prediction, advisory, 
+  report) are clearly separated and documented, so 
+  users understand which component produced which 
+  output.
+
+### Ethics
+- AirSeva provides general health advisory guidance 
+  based on air quality conditions. It is NOT a 
+  substitute for professional medical diagnosis or 
+  treatment.
+- A visible disclaimer is shown in the app: 
+  "This advisory is for informational purposes only 
+  and does not constitute medical advice. Please 
+  consult a healthcare professional for medical 
+  concerns, especially for vulnerable groups."
+- Recommendations are framed as precautionary 
+  (e.g., "consider reducing outdoor activity") rather 
+  than prescriptive medical instructions.
+
+### Privacy
+- AirSeva does not collect, store, or process any 
+  personal user data (name, location, health records, 
+  device identifiers).
+- All air quality data used is public, city-level 
+  AQI data sourced from open APIs/datasets — no 
+  individual tracking or profiling occurs.
+- No user session data is retained beyond the active 
+  Streamlit session.
+
+---
+
 ## 🏙️ Supported Indian Cities (26)
 
 AirSeva tracks and snaps location queries to these 26 major cities:
