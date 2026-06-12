@@ -203,6 +203,29 @@ Section 7 guidelines.
 
 ---
 
+## Target Users
+
+AirSeva is designed to serve a broad range of stakeholders 
+involved in air quality awareness and public health response:
+
+- **General Public**: Citizens seeking real-time, location-based 
+  air quality information and simple health guidance for daily 
+  outdoor activity planning.
+- **Vulnerable Groups**: Children, elderly individuals, pregnant 
+  women, and patients with respiratory conditions (e.g., asthma, 
+  COPD) who require more cautious, tailored advisories during 
+  poor air quality periods.
+- **ASHA Workers & Community Health Volunteers**: Frontline 
+  health workers who can use AirSeva's advisories to guide 
+  awareness campaigns and counsel vulnerable households in 
+  their communities.
+- **Urban Local Bodies & Policy Makers**: Municipal and city 
+  administration teams who can reference city-level AQI trends 
+  and health impact data to inform public advisories and 
+  policy decisions.
+
+---
+
 ## 🏙️ Supported Indian Cities (26)
 
 AirSeva tracks and snaps location queries to these 26 major cities:
@@ -255,11 +278,11 @@ User vulnerability is evaluated out of a maximum score of 8 based on weighted ph
 
 ---
 
-## 🎓 Internship & Credentials
+## Internship & Credentials
 
 This project was built during the MCA internship program:
-- **Program**: 1M1B (1 Million 1 Billion) AI for Sustainability
-- **Collaborating Partners**: IBM SkillsBuild & AICTE (All India Council for Technical Education)
-- **Institution**: Dayananda Sagar University (DSU), Bangalore
+
+- **Program**: 1M1B (1 Million for 1 Billion) AI for Sustainability
+- **Partners**: IBM SkillsBuild + AICTE
 - **Developer**: Shreenivas S B
-- **Completion Date**: June 2026
+- **Institution**: Dayananda Sagar University, Bangalore
