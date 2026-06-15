@@ -58,9 +58,11 @@ def run_airseva(
     # Step 3: Call generate_advisory(...)
     try:
         agent3_output = generate_advisory(
-            agent1_output,
-            agent2_output,
-            vulnerability_score
+            city=agent1_output.get("city", city),
+            aqi=agent1_output.get("aqi_value", 0),
+            risk_level=agent2_output.get("risk_level", "Low"),
+            pollutants=agent1_output.get("pollutants", {}),
+            vulnerability_score=vulnerability_score
         )
     except Exception as e:
         logger.error(f"Agent 3 failed — {e}")
