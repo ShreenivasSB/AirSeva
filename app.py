@@ -224,6 +224,18 @@ hr {
     font-size: 11px; font-weight: 700; color: #1d4ed8;
     letter-spacing: 0.04em;
 }
+
+/* ══ DATAFRAME OVERRIDE ══ */
+[data-testid="stDataFrame"] iframe {
+    background-color: #ffffff !important;
+}
+.stDataFrame [data-testid="stDataFrame"] {
+    background-color: rgba(255,255,255,0.95) !important;
+}
+div[data-testid="stDataFrame"] > div {
+    background-color: rgba(255,255,255,0.95) !important;
+    border-radius: 10px !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -247,26 +259,6 @@ def aqi_category(aqi):
 # ============================================================
 # AIRSEVA AGENT SECTION
 # ============================================================
-
-# 1. HEADER
-    st.markdown("""
-    <div style="padding: 2rem 0 1rem 0;">
-        <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
-            <span style="font-size:2.8rem;">🌬️</span>
-            <div>
-                <h1 style="margin:0; font-size:2.4rem; font-weight:800; color:#1a3a5c; letter-spacing:-0.02em;">AirSeva</h1>
-                <p style="margin:0; font-size:1rem; color:#4a7fa5; font-weight:500;">Agentic Air Quality Health Advisory for Indian Communities</p>
-            </div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-            <span class="ibm-tag">🔵 IBM Granite 4 · WatsonX</span>
-            <span class="ibm-tag">🤖 Random Forest ML</span>
-            <span class="ibm-tag">📡 WAQI Live Data</span>
-            <span class="ibm-tag">🏥 WHO 2021 Guidelines</span>
-        </div>
-        <hr style="margin-top:1.5rem; border-color:rgba(255,255,255,0.1);"/>
-    </div>
-    """, unsafe_allow_html=True)
 
 # City coordinate lookup for supported cities
 CITY_COORDS = {
@@ -335,6 +327,25 @@ if "airseva_smoker" not in st.session_state:
     st.session_state["airseva_smoker"] = False
 if "airseva_outdoor_worker" not in st.session_state:
     st.session_state["airseva_outdoor_worker"] = False
+
+st.markdown("""
+<div style="padding: 1.5rem 0 1rem 0;">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+        <span style="font-size:2.8rem;">🌬️</span>
+        <div>
+            <h1 style="margin:0; font-size:2.4rem; font-weight:800; color:#1a3a5c; letter-spacing:-0.02em;">AirSeva</h1>
+            <p style="margin:0; font-size:1rem; color:#4a7fa5; font-weight:500;">Agentic Air Quality Health Advisory for Indian Communities</p>
+        </div>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <span class="ibm-tag">🔵 IBM Granite 4 · WatsonX</span>
+        <span class="ibm-tag">🤖 Random Forest ML</span>
+        <span class="ibm-tag">📡 WAQI Live Data</span>
+        <span class="ibm-tag">🏥 WHO 2021 Guidelines</span>
+    </div>
+    <hr style="margin-top:1.5rem; border-color:#90caf9;"/>
+</div>
+""", unsafe_allow_html=True)
 
 # Layout: two columns
 left_col, right_col = st.columns([1, 1])
