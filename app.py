@@ -35,7 +35,7 @@ st.markdown("""
 
 /* ══ BACKGROUND ══ */
 .stApp {
-    background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 50%, #0f2744 100%);
+    background: linear-gradient(135deg, #e8f4fd 0%, #d1eaf8 50%, #bee3f8 100%);
     background-attachment: fixed;
     font-family: 'Inter', sans-serif;
 }
@@ -43,29 +43,26 @@ st.markdown("""
 /* ══ ALL TEXT ══ */
 .stApp p, .stApp li, .stApp span, .stApp label, .stApp div,
 .stMarkdown p, .stMarkdown li {
-    color: #e2e8f0 !important;
-    font-weight: 500 !important;
+    color: #2c5282 !important;
+    font-weight: 600 !important;
 }
 .stApp h1, .stApp h2, .stApp h3, .stApp h4 {
-    color: #f0f9ff !important;
+    color: #1a3a5c !important;
     font-weight: 700 !important;
 }
 
 /* ══ BUTTONS ══ */
 .stButton > button {
-    background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
-    color: #ffffff !important;
-    border: none !important;
+    background-color: #ffffff !important;
+    color: #2c5282 !important;
+    border: 1.5px solid #63b3ed !important;
     font-weight: 700 !important;
     border-radius: 10px !important;
-    padding: 0.5rem 1.2rem !important;
     transition: all 0.2s ease !important;
-    box-shadow: 0 4px 15px rgba(37,99,235,0.3) !important;
 }
 .stButton > button:hover {
-    background: linear-gradient(135deg, #1e40af, #1d4ed8) !important;
-    box-shadow: 0 6px 20px rgba(37,99,235,0.5) !important;
-    transform: translateY(-1px) !important;
+    background-color: #bee3f8 !important;
+    color: #2c5282 !important;
 }
 
 /* ══ FORM SUBMIT BUTTON ══ */
@@ -95,78 +92,76 @@ st.markdown("""
 [data-testid="stMetricValue"] {
     font-size: 28px !important;
     font-weight: 800 !important;
-    color: #60a5fa !important;
+    color: #1a3a5c !important;
     font-family: 'JetBrains Mono', monospace !important;
 }
 [data-testid="stMetricLabel"] {
-    color: #94a3b8 !important;
+    color: #2c5282 !important;
     font-weight: 600 !important;
     font-size: 13px !important;
     text-transform: uppercase !important;
     letter-spacing: 0.05em !important;
 }
 [data-testid="stMetric"] {
-    background: rgba(255,255,255,0.05) !important;
+    background: rgba(255,255,255,0.80) !important;
     border-radius: 12px !important;
     padding: 16px !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    backdrop-filter: blur(10px) !important;
+    border: 1px solid #90caf9 !important;
 }
 
 /* ══ INPUT FIELDS ══ */
 [data-testid="stTextInput"] input,
 [data-testid="stNumberInput"] input {
-    background-color: rgba(255,255,255,0.07) !important;
-    color: #f0f9ff !important;
-    border: 1.5px solid rgba(96,165,250,0.4) !important;
+    background-color: #ffffff !important;
+    color: #1a3a5c !important;
+    border: 1.5px solid #4299e1 !important;
     font-weight: 600 !important;
     border-radius: 8px !important;
 }
 [data-testid="stTextInput"] input::placeholder {
-    color: #64748b !important;
+    color: #7bafd4 !important;
 }
 
 /* ══ SLIDER ══ */
 [data-testid="stSlider"] p,
 [data-testid="stSlider"] span,
 [data-testid="stSlider"] label {
-    color: #cbd5e1 !important;
+    color: #2c5282 !important;
     font-weight: 600 !important;
 }
 
 /* ══ CHECKBOXES ══ */
 [data-testid="stCheckbox"] label {
-    color: #cbd5e1 !important;
+    color: #2c5282 !important;
     font-weight: 600 !important;
 }
 
 /* ══ ALERT BOXES ══ */
 [data-testid="stAlert"] {
-    background: rgba(255,255,255,0.06) !important;
+    background-color: #ebf8ff !important;
     border-radius: 10px !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    backdrop-filter: blur(8px) !important;
+    border: 1px solid #90caf9 !important;
 }
 [data-testid="stAlert"] p {
-    color: #e2e8f0 !important;
+    color: #2c5282 !important;
 }
 
 /* ══ EXPANDER ══ */
 [data-testid="stExpander"] {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    background-color: rgba(255,255,255,0.80) !important;
+    border: 1px solid #90caf9 !important;
     border-radius: 10px !important;
 }
 [data-testid="stExpander"] summary p {
-    color: #cbd5e1 !important;
+    color: #2c5282 !important;
     font-weight: 700 !important;
 }
 
 /* ══ DATAFRAME ══ */
 [data-testid="stDataFrame"] {
-    background: rgba(255,255,255,0.05) !important;
+    background-color: rgba(255,255,255,0.90) !important;
     border-radius: 10px !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    border: 1px solid #90caf9 !important;
 }
 
 /* ══ PROGRESS BAR ══ */
@@ -179,8 +174,8 @@ st.markdown("""
 
 /* ══ CAPTION ══ */
 [data-testid="stCaptionContainer"] p {
-    color: #64748b !important;
-    font-weight: 500 !important;
+    color: #2c5282 !important;
+    font-weight: 600 !important;
     font-size: 12px !important;
 }
 
@@ -191,8 +186,8 @@ hr {
 
 /* ══ SPINNER ══ */
 [data-testid="stSpinner"] p {
-    color: #60a5fa !important;
-    font-weight: 600 !important;
+    color: #2c5282 !important;
+    font-weight: 700 !important;
 }
 
 /* ══ SUCCESS / WARNING / ERROR / INFO ══ */
@@ -203,12 +198,12 @@ hr {
 
 /* ══ CUSTOM CARDS ══ */
 .airseva-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.85);
+    border: 1px solid #90caf9;
     border-radius: 14px;
     padding: 20px 24px;
     margin-bottom: 16px;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 12px rgba(44,82,130,0.08);
 }
 .airseva-badge {
     display: inline-block;
@@ -224,9 +219,9 @@ hr {
 .badge-high   { background: rgba(239,68,68,0.2);  color: #f87171; border: 1px solid rgba(239,68,68,0.4); }
 .ibm-tag {
     display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(30,64,175,0.3); border: 1px solid rgba(96,165,250,0.4);
+    background: #dbeafe; border: 1px solid #93c5fd;
     border-radius: 6px; padding: 3px 10px;
-    font-size: 11px; font-weight: 700; color: #93c5fd;
+    font-size: 11px; font-weight: 700; color: #1d4ed8;
     letter-spacing: 0.04em;
 }
 </style>
@@ -259,8 +254,8 @@ def aqi_category(aqi):
         <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
             <span style="font-size:2.8rem;">🌬️</span>
             <div>
-                <h1 style="margin:0; font-size:2.4rem; font-weight:800; color:#f0f9ff; letter-spacing:-0.02em;">AirSeva</h1>
-                <p style="margin:0; font-size:1rem; color:#94a3b8; font-weight:500;">Agentic Air Quality Health Advisory for Indian Communities</p>
+                <h1 style="margin:0; font-size:2.4rem; font-weight:800; color:#1a3a5c; letter-spacing:-0.02em;">AirSeva</h1>
+                <p style="margin:0; font-size:1rem; color:#4a7fa5; font-weight:500;">Agentic Air Quality Health Advisory for Indian Communities</p>
             </div>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
@@ -552,27 +547,27 @@ if st.session_state["airseva_result"] is not None:
 
         st.markdown("""
     <div class="airseva-card" style="margin-bottom:24px;">
-        <p style="margin:0 0 14px 0; font-size:11px; font-weight:700; color:#64748b; letter-spacing:0.1em; text-transform:uppercase;">Agent Pipeline — All Steps Complete</p>
+        <p style="margin:0 0 14px 0; font-size:11px; font-weight:700; color:#2c5282; letter-spacing:0.1em; text-transform:uppercase;">Agent Pipeline — All Steps Complete</p>
         <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">
-            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+            <div style="text-align:center; padding:14px; background:rgba(219,234,254,0.6); border-radius:10px; border:1px solid #93c5fd;">
                 <div style="font-size:1.5rem;">📡</div>
-                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 1</div>
-                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Data Fetched</div>
+                <div style="font-size:11px; font-weight:700; color:#1d4ed8; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 1</div>
+                <div style="font-size:12px; color:#4a7fa5; margin-top:2px;">Data Fetched</div>
             </div>
-            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+            <div style="text-align:center; padding:14px; background:rgba(219,234,254,0.6); border-radius:10px; border:1px solid #93c5fd;">
                 <div style="font-size:1.5rem;">🧠</div>
-                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 2</div>
-                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Risk Predicted</div>
+                <div style="font-size:11px; font-weight:700; color:#1d4ed8; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 2</div>
+                <div style="font-size:12px; color:#4a7fa5; margin-top:2px;">Risk Predicted</div>
             </div>
-            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+            <div style="text-align:center; padding:14px; background:rgba(219,234,254,0.6); border-radius:10px; border:1px solid #93c5fd;">
                 <div style="font-size:1.5rem;">🔵</div>
-                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 3</div>
-                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Advisory Generated</div>
+                <div style="font-size:11px; font-weight:700; color:#1d4ed8; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 3</div>
+                <div style="font-size:12px; color:#4a7fa5; margin-top:2px;">Advisory Generated</div>
             </div>
-            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+            <div style="text-align:center; padding:14px; background:rgba(219,234,254,0.6); border-radius:10px; border:1px solid #93c5fd;">
                 <div style="font-size:1.5rem;">📋</div>
-                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 4</div>
-                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Report Compiled</div>
+                <div style="font-size:11px; font-weight:700; color:#1d4ed8; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 4</div>
+                <div style="font-size:12px; color:#4a7fa5; margin-top:2px;">Report Compiled</div>
             </div>
         </div>
     </div>
@@ -744,14 +739,14 @@ if st.session_state["airseva_result"] is not None:
         st.markdown("### 🔵 Health Advisory — IBM Granite 4 (WatsonX)")
         advisory_text = result.get("advisory", "")
         st.markdown(f"""
-    <div class="airseva-card" style="border-left: 4px solid #3b82f6;">
+    <div class="airseva-card" style="border-left: 4px solid #2563eb; background:rgba(255,255,255,0.90);">
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
             <span style="font-size:1.4rem;">🔵</span>
             <span class="ibm-tag">IBM Granite 4 · granite-4-h-small · WatsonX Frankfurt</span>
         </div>
-        <p style="color:#e2e8f0; font-size:15px; line-height:1.75; margin:0;">{advisory_text}</p>
+        <p style="color:#1a3a5c; font-size:15px; line-height:1.75; margin:0;">{advisory_text}</p>
         <div style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
-            <p style="margin:0; font-size:12px; color:#f59e0b;">⚠️ This advisory is for informational purposes only and does not constitute medical advice. Please consult a healthcare professional for medical concerns, especially for vulnerable groups.</p>
+            <p style="margin:0; font-size:12px; color:#b45309;">⚠️ This advisory is for informational purposes only and does not constitute medical advice. Please consult a healthcare professional for medical concerns, especially for vulnerable groups.</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -817,14 +812,14 @@ Powered by WAQI + IBM Granite 4 (WatsonX) + Random Forest ML
 
 
     st.markdown("""
-    <div style="margin-top:3rem; padding:2rem; background:rgba(255,255,255,0.03); border-top:1px solid rgba(255,255,255,0.08); text-align:center;">
-        <p style="margin:0 0 8px 0; font-size:1rem; font-weight:700; color:#f0f9ff;">🌬️ AirSeva — Agentic Air Quality Health Advisory</p>
-        <p style="margin:0 0 12px 0; font-size:13px; color:#64748b;">Powered by IBM Granite 4 (WatsonX) · Random Forest ML · WAQI API · WHO 2021 Guidelines</p>
+    <div style="margin-top:3rem; padding:2rem; background:rgba(255,255,255,0.60); border-top:1px solid #90caf9; text-align:center;">
+        <p style="margin:0 0 8px 0; font-size:1rem; font-weight:700; color:#1a3a5c;">🌬️ AirSeva — Agentic Air Quality Health Advisory</p>
+        <p style="margin:0 0 12px 0; font-size:13px; color:#4a7fa5;">Powered by IBM Granite 4 (WatsonX) · Random Forest ML · WAQI API · WHO 2021 Guidelines</p>
         <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:12px;">
             <span class="ibm-tag">🏛️ 1M1B AI for Sustainability</span>
             <span class="ibm-tag">🔵 IBM SkillsBuild + AICTE</span>
             <span class="ibm-tag">👨💻 Shreenivas S B · DSU Bangalore</span>
         </div>
-        <p style="margin:0; font-size:11px; color:#334155;">SDG 3 · Good Health & Well-Being &nbsp;|&nbsp; SDG 11 · Sustainable Cities & Communities</p>
+        <p style="margin:0; font-size:11px; color:#2c5282;">SDG 3 · Good Health & Well-Being &nbsp;|&nbsp; SDG 11 · Sustainable Cities & Communities</p>
     </div>
     """, unsafe_allow_html=True)
