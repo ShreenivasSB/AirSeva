@@ -57,13 +57,27 @@ def run_airseva(
 
     # Step 3: Call generate_advisory(...)
     try:
-        agent3_output = generate_advisory(
+        advisory_text = generate_advisory(
             city=agent1_output.get("city", city),
             aqi=agent1_output.get("aqi_value", 0),
             risk_level=agent2_output.get("risk_level", "Low"),
             pollutants=agent1_output.get("pollutants", {}),
             vulnerability_score=vulnerability_score
         )
+
+        # Determine vulnerability profile label from score
+        if vulnerability_score <= 1:
+            vuln_profile = "Low Risk Profile"
+        elif vulnerability_score <= 4:
+            vuln_profile = "Moderate Risk Profile"
+        else:
+            vuln_profile = "High Risk Profile"
+
+        agent3_output = {
+            "advisory": advisory_text,
+            "vulnerability_score": vulnerability_score,
+            "vulnerability_profile": vuln_profile
+        }
     except Exception as e:
         logger.error(f"Agent 3 failed — {e}")
         raise e
