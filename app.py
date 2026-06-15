@@ -766,6 +766,11 @@ if st.session_state["airseva_result"] is not None:
         # E. GEMINI ADVISORY
         st.markdown("### 💊 Health Advisory (Gemini 2.5 Flash)")
         st.info(result.get("advisory", ""))
+        st.warning(
+            "⚠️ This advisory is for informational purposes only and does not constitute "
+            "medical advice. Please consult a healthcare professional for medical concerns, "
+            "especially for vulnerable groups."
+        )
         
         # IMPROVEMENT 3: FIX TIMESTAMP FORMAT
         st.caption(f"🕐 Generated at: {format_timestamp(result['timestamp'])}")
