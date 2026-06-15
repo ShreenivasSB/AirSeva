@@ -314,7 +314,7 @@ def aqi_category(aqi):
 
 # 1. HEADER
 st.title("🌬️ AirSeva — Agentic Air Quality Health Advisory")
-st.markdown("### Powered by Multi-Agent AI | WAQI + IBM Granite 13B (WatsonX) + Random Forest")
+st.markdown("### Powered by Multi-Agent AI | WAQI + IBM Granite 3.0 8B Instruct (WatsonX) + Random Forest")
 
 # City coordinate lookup for supported cities
 CITY_COORDS = {
@@ -765,7 +765,7 @@ if st.session_state["airseva_result"] is not None:
         prob_col3.metric("Low Risk", f"{probs.get('Low', 0.0) * 100:.1f}%")
 
         # E. IBM GRANITE ADVISORY
-        st.markdown("### 🔵 Health Advisory (IBM Granite 13B — WatsonX)")
+        st.markdown("### 🔵 Health Advisory (IBM Granite 3.0 8B Instruct — WatsonX)")
         with st.spinner("🔵 Fetching IBM Granite advisory..."):
             granite_result = get_granite_advisory(
                 city=result.get("city", city_to_run),
@@ -783,7 +783,7 @@ if st.session_state["airseva_result"] is not None:
         
         # IMPROVEMENT 3: FIX TIMESTAMP FORMAT
         st.caption(f"🕐 Generated at: {format_timestamp(result['timestamp'])}")
-        st.caption("🔵 Advisory powered by IBM Granite 13B Chat v2 via IBM WatsonX AI (Frankfurt region)")
+        st.caption("🔵 Advisory powered by IBM Granite 3.0 8B Instruct via IBM WatsonX AI (Frankfurt region)")
 
         # IMPROVEMENT 5: DOWNLOAD REPORT BUTTON
         st.markdown("### 📥 Download Your Report")

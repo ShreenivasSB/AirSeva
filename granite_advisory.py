@@ -53,7 +53,7 @@ Advisory:"""
                 "Accept": "application/json"
             },
             json={
-                "model_id": "ibm/granite-13b-chat-v2",
+                "model_id": "ibm/granite-3-8b-instruct",
                 "input": prompt,
                 "parameters": {
                     "decoding_method": "greedy",
