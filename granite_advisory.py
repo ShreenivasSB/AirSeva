@@ -46,14 +46,14 @@ Advisory:"""
     # Step 3: Call WatsonX Granite
     try:
         wx_resp = requests.post(
-            "https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29",
+            "https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2024-05-01",
             headers={
                 "Authorization": f"Bearer {iam_token}",
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
             json={
-                "model_id": "ibm/granite-3-8b-instruct",
+                "model_id": "ibm/granite-4-h-small",
                 "input": prompt,
                 "parameters": {
                     "decoding_method": "greedy",
