@@ -14,6 +14,7 @@ import pytz
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from orchestrator import run_airseva
+from granite_advisory import get_granite_advisory
 # ============================================================
 
 
@@ -313,7 +314,7 @@ def aqi_category(aqi):
 
 # 1. HEADER
 st.title("🌬️ AirSeva — Agentic Air Quality Health Advisory")
-st.markdown("### Powered by Multi-Agent AI | WAQI + Gemini 2.5 Flash + Random Forest")
+st.markdown("### Powered by Multi-Agent AI | WAQI + IBM Granite 13B (WatsonX) + Random Forest")
 
 # City coordinate lookup for supported cities
 CITY_COORDS = {
@@ -763,9 +764,17 @@ if st.session_state["airseva_result"] is not None:
         prob_col2.metric("Moderate Risk", f"{probs.get('Moderate', 0.0) * 100:.1f}%")
         prob_col3.metric("Low Risk", f"{probs.get('Low', 0.0) * 100:.1f}%")
 
-        # E. GEMINI ADVISORY
-        st.markdown("### 💊 Health Advisory (Gemini 2.5 Flash)")
-        st.info(result.get("advisory", ""))
+        # E. IBM GRANITE ADVISORY
+        st.markdown("### 🔵 Health Advisory (IBM Granite 13B — WatsonX)")
+        with st.spinner("🔵 Fetching IBM Granite advisory..."):
+            granite_result = get_granite_advisory(
+                city=result.get("city", city_to_run),
+                aqi=result.get("aqi_value", 0),
+                risk_level=result.get("risk_level", "Low"),
+                pollutants=result.get("pollutants", {}),
+                vulnerability_score=vulnerability_score
+            )
+        st.info(granite_result)
         st.warning(
             "⚠️ This advisory is for informational purposes only and does not constitute "
             "medical advice. Please consult a healthcare professional for medical concerns, "
@@ -774,6 +783,7 @@ if st.session_state["airseva_result"] is not None:
         
         # IMPROVEMENT 3: FIX TIMESTAMP FORMAT
         st.caption(f"🕐 Generated at: {format_timestamp(result['timestamp'])}")
+        st.caption("🔵 Advisory powered by IBM Granite 13B Chat v2 via IBM WatsonX AI (Frankfurt region)")
 
         # IMPROVEMENT 5: DOWNLOAD REPORT BUTTON
         st.markdown("### 📥 Download Your Report")
@@ -843,7 +853,7 @@ c1.markdown(
 )
 c2.markdown(
     "<p style='color:#2c5282; font-weight:700; font-size:13px; text-align:center;'>"
-    "🤖 Powered by Random Forest ML + WAQI API</p>",
+    "🤖 Powered by IBM Granite 13B (WatsonX) + Random Forest ML + WAQI API</p>",
     unsafe_allow_html=True,
 )
 c3.markdown(
