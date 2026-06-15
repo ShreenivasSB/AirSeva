@@ -1,6 +1,6 @@
 # 🌫️ AirSeva: Agentic Air Quality Health Advisory System
 
-AirSeva is a 4-agent agentic AI system designed to provide real-time air quality health advisories tailored for Indian communities. By integrating real-time environmental data with machine learning risk prediction and Gemini-powered LLM advisories, AirSeva helps individuals manage their exposure to air pollution based on their personalized health profile.
+AirSeva is a 4-agent agentic AI system designed to provide real-time air quality health advisories tailored for Indian communities. By integrating real-time environmental data with machine learning risk prediction and IBM Granite 4-powered LLM advisories via WatsonX, AirSeva helps individuals manage their exposure to air pollution based on their personalized health profile.
 
 Developed as part of the **1M1B AI for Sustainability** internship in collaboration with **IBM SkillsBuild + AICTE** at **Dayananda Sagar University, Bangalore**.
 
@@ -8,7 +8,7 @@ Developed as part of the **1M1B AI for Sustainability** internship in collaborat
 
 ## 📖 Project Overview
 
-AirSeva operates as an orchestrated multi-agent system that bridges environmental data science with actionable public health insights. It auto-detects or accepts a user's location (from 26 supported Indian cities), queries live pollution and historical weather data, predicts health risk levels using a trained Random Forest model, generates context-aware medical recommendations using Gemini, and compiles standard PDF and text health reports.
+AirSeva operates as an orchestrated multi-agent system that bridges environmental data science with actionable public health insights. It auto-detects or accepts a user's location (from 26 supported Indian cities), queries live pollution and historical weather data, predicts health risk levels using a trained Random Forest model, generates context-aware medical recommendations using IBM Granite 4 (WatsonX), and compiles standard PDF and text health reports.
 
 ---
 
@@ -32,7 +32,7 @@ flowchart TD
     ORC["⚙️ Orchestrator\nCoordinates agents · manages pipeline"]
     A1["🌐 Agent 1 · Data Fetcher\nFetches live AQI · weather · pollutant data"]
     A2["🤖 Agent 2 · ML Prediction\nRandom Forest · risk level · confidence score"]
-    A3["💬 Agent 3 · Advisory\nGemini 2.5 Flash · personalised health advice"]
+    A3["💬 Agent 3 · Advisory\nIBM Granite 4 (WatsonX) · personalised health advice"]
     A4["📄 Agent 4 · Report\nGenerates PDF + TXT downloadable report"]
     OUT["📊 Output · Streamlit Dashboard\nAQI charts · risk level · WHO compare · advice"]
 
@@ -40,16 +40,16 @@ flowchart TD
     METEO["Open-Meteo\nWeather data"]
     WHO["WHO 2021\nPollutant limits"]
     SCORE["Score 0–8\nVulnerability index"]
-    GEM["Gemini API\ngoogle-genai 2.7"]
+    GRANITE["IBM WatsonX AI\nibm/granite-4-h-small"]
     RPT["PDF · TXT\nReport download"]
-    ENV[".env config\nWAQI_TOKEN · GEMINI_API_KEY"]
+    ENV[".env config\nWAQI_TOKEN · WATSONX_API_KEY · WATSONX_PROJECT_ID"]
 
     UI --> ORC --> A1 --> A2 --> A3 --> A4 --> OUT
     WAQI -->|live feed| A1
     METEO -->|weather| A1
     WHO -->|limits| A2
     SCORE -->|output| A2
-    GEM -->|LLM call| A3
+    GRANITE -->|LLM call| A3
     A4 -->|export| RPT
     ENV -.->|secrets| A1
     ENV -.->|secrets| A3
@@ -62,7 +62,7 @@ flowchart TD
 - **Core & Logic**: Python 3.10+
 - **Frontend / Web App**: Streamlit
 - **ML Framework**: scikit-learn 1.8.0 (Random Forest Classifier)
-- **Generative AI API**: google-genai 2.7.0 (using `gemini-2.5-flash`)
+- **Generative AI API**: ibm-watsonx-ai (using `ibm/granite-4-h-small` via WatsonX Frankfurt)
 - **Data APIs**: WAQI API (World Air Quality Index), Open-Meteo Air Quality API
 - **Data Processing**: pandas, numpy
 - **Visualization**: Plotly, Folium, streamlit-folium
@@ -77,7 +77,7 @@ SRP_PROJECT/
 ├── agents/                      # Modulized 4-agent logic
 │   ├── agent_1_data_fetcher.py  # Fetches live/historical API data and engineers lag features
 │   ├── agent_2_ml_prediction.py # Runs Random Forest model prediction
-│   ├── agent_3_advisory.py      # Queries Gemini for personalized advice
+│   ├── agent_3_advisory.py      # Queries IBM Granite 4 (WatsonX) for personalized advice
 │   └── agent_4_report.py        # Compiles structured JSON/text reports and checks WHO limits
 ├── data/                        # Datasets (CPCB India Kaggle data)
 │   ├── city_day.csv
@@ -114,7 +114,8 @@ pip install -r requirements.txt
 Create a file named `.env` in the project root directory:
 ```env
 WAQI_TOKEN=your_waqi_api_token_here
-GEMINI_API_KEY=your_gemini_api_key_here
+WATSONX_API_KEY=your_ibm_watsonx_api_key_here
+WATSONX_PROJECT_ID=your_ibm_watsonx_project_id_here
 ```
 * Note: You can obtain a free WAQI token at [aqicn.org/data-platform/token/](https://aqicn.org/data-platform/token/).
 
@@ -139,7 +140,7 @@ AirSeva partitions its logic across 4 distinct autonomous agents:
 2. **Agent 2: Machine Learning Predictor (`agent_2_ml_prediction.py`)**
    Prepares the 22 engineered features, loads the pre-trained Random Forest model, and predicts the class health risk level (Low, Moderate, High) along with class assignment confidence.
 3. **Agent 3: Health Advisor (`agent_3_advisory.py`)**
-   Takes the live pollutant concentrations, ML risk level, and user vulnerability details and prompts `gemini-2.5-flash` using structured system instructions to formulate highly tailored, empathetic, and actionable medical/lifestyle advice.
+   Takes the live pollutant concentrations, ML risk level, and user vulnerability details and prompts `ibm/granite-4-h-small` via IBM WatsonX AI using structured system instructions to formulate highly tailored, empathetic, and actionable medical/lifestyle advice.
 4. **Agent 4: Report Compiler (`agent_4_report.py`)**
    Validates outputs, checks concentration levels against strict WHO 2021 air quality limits, compiles a structured JSON output, and formats raw text summaries alongside PDF export utilities.
 
@@ -168,7 +169,7 @@ Section 7 guidelines.
   the Random Forest model's AQI prediction is shown 
   alongside the raw input pollutant data (PM2.5, PM10, 
   NO2, etc.) used to generate it.
-- The Gemini Advisory Agent's recommendations are 
+- The IBM Granite Advisory Agent's recommendations are 
   presented as generated guidance, not as black-box 
   output — users can see which AQI category and city 
   data informed the advisory.

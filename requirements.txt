@@ -9,6 +9,6 @@ plotly>=5.18.0
 folium>=0.15.0
 streamlit-folium>=0.18.0
 streamlit-js-eval>=0.1.7
-google-genai==2.7.0
+ibm-watsonx-ai>=1.0.0
 pytz
 fpdf2
