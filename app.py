@@ -31,263 +31,204 @@ load_dotenv()
 
 st.markdown("""
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 
 /* ══ BACKGROUND ══ */
 .stApp {
-    background: linear-gradient(135deg, #e8f4fd 0%, #d1eaf8 50%, #bee3f8 100%);
+    background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 50%, #0f2744 100%);
     background-attachment: fixed;
+    font-family: 'Inter', sans-serif;
 }
 
-/* ══ SIDEBAR ══ */
-[data-testid="stSidebar"] {
-    background-color: #1a3a5c;
-}
-[data-testid="stSidebar"] *  {
-    color: #ffffff !important;
-    font-weight: 700 !important;
-}
-[data-testid="stSidebar"] p,
-[data-testid="stSidebar"] li,
-[data-testid="stSidebar"] span,
-[data-testid="stSidebar"] label,
-[data-testid="stSidebar"] div,
-[data-testid="stSidebar"] a,
-[data-testid="stSidebar"] small,
-[data-testid="stSidebar"] .stMarkdown,
-[data-testid="stSidebar"] .stMarkdown p,
-[data-testid="stSidebar"] .stMarkdown li,
-[data-testid="stSidebar"] .stMarkdown span {
-    color: #ffffff !important;
-    font-weight: 700 !important;
-}
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3,
-[data-testid="stSidebar"] h4 {
-    color: #ffffff !important;
-    font-weight: 900 !important;
-}
-[data-testid="stSidebar"] button {
-    background-color: #ffffff !important;
-    color: #1a3a5c !important;
-    border: 1px solid #90caf9 !important;
-    font-weight: 700 !important;
-    border-radius: 8px !important;
-}
-[data-testid="stSidebar"] [data-testid="stMetricValue"],
-[data-testid="stSidebar"] [data-testid="stMetricLabel"] {
-    color: #ffffff !important;
-}
-
-/* ══ ALL TEXT IN MAIN AREA ══ */
-.stApp p, .stApp li, .stApp span,
-.stApp label, .stApp div,
+/* ══ ALL TEXT ══ */
+.stApp p, .stApp li, .stApp span, .stApp label, .stApp div,
 .stMarkdown p, .stMarkdown li {
-    color: #2c5282 !important;
-    font-weight: 600 !important;
+    color: #e2e8f0 !important;
+    font-weight: 500 !important;
 }
 .stApp h1, .stApp h2, .stApp h3, .stApp h4 {
-    color: #2c5282 !important;
+    color: #f0f9ff !important;
     font-weight: 700 !important;
 }
 
-/* ══ ALL BUTTONS ══ */
-.stButton > button,
-button {
-    background-color: #ffffff !important;
-    color: #2c5282 !important;
-    border: 1.5px solid #63b3ed !important;
+/* ══ BUTTONS ══ */
+.stButton > button {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
+    color: #ffffff !important;
+    border: none !important;
     font-weight: 700 !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
+    padding: 0.5rem 1.2rem !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 15px rgba(37,99,235,0.3) !important;
 }
 .stButton > button:hover {
-    background-color: #bee3f8 !important;
-    color: #2c5282 !important;
+    background: linear-gradient(135deg, #1e40af, #1d4ed8) !important;
+    box-shadow: 0 6px 20px rgba(37,99,235,0.5) !important;
+    transform: translateY(-1px) !important;
 }
 
-/* Form submit / predict button */
+/* ══ FORM SUBMIT BUTTON ══ */
 [data-testid="stFormSubmitButton"] > button {
-    background-color: #63b3ed !important;
+    background: linear-gradient(135deg, #059669, #10b981) !important;
     color: #ffffff !important;
-    border: 1px solid #63b3ed !important;
+    border: none !important;
     font-weight: 700 !important;
-    border-radius: 8px !important;
-}
-[data-testid="stFormSubmitButton"] > button:hover {
-    background-color: #4299e1 !important;
+    border-radius: 10px !important;
 }
 
-/* Download button */
+/* ══ DOWNLOAD BUTTON ══ */
 [data-testid="stDownloadButton"] button {
-    background-color: #ffffff !important;
-    color: #2c5282 !important;
-    border: 1.5px solid #63b3ed !important;
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6) !important;
+    color: #ffffff !important;
+    border: none !important;
     font-weight: 700 !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 15px rgba(124,58,237,0.3) !important;
 }
 [data-testid="stDownloadButton"] button:hover {
-    background-color: #bee3f8 !important;
+    box-shadow: 0 6px 20px rgba(124,58,237,0.5) !important;
+    transform: translateY(-1px) !important;
 }
 
-/* ══ CHECKBOXES — fully light ══ */
-[data-testid="stCheckbox"] {
-    background-color: transparent !important;
+/* ══ METRICS ══ */
+[data-testid="stMetricValue"] {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    color: #60a5fa !important;
+    font-family: 'JetBrains Mono', monospace !important;
 }
-[data-testid="stCheckbox"] label {
-    color: #2c5282 !important;
-    font-weight: 700 !important;
+[data-testid="stMetricLabel"] {
+    color: #94a3b8 !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
 }
-[data-testid="stCheckbox"] span {
-    color: #2c5282 !important;
-    font-weight: 700 !important;
+[data-testid="stMetric"] {
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    backdrop-filter: blur(10px) !important;
 }
-input[type="checkbox"] {
-    accent-color: #63b3ed !important;
-    width: 16px !important;
-    height: 16px !important;
+
+/* ══ INPUT FIELDS ══ */
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input {
+    background-color: rgba(255,255,255,0.07) !important;
+    color: #f0f9ff !important;
+    border: 1.5px solid rgba(96,165,250,0.4) !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+}
+[data-testid="stTextInput"] input::placeholder {
+    color: #64748b !important;
 }
 
 /* ══ SLIDER ══ */
 [data-testid="stSlider"] p,
 [data-testid="stSlider"] span,
 [data-testid="stSlider"] label {
-    color: #2c5282 !important;
-    font-weight: 700 !important;
-}
-[data-testid="stSlider"] div[role="slider"] {
-    background-color: #4299e1 !important;
+    color: #cbd5e1 !important;
+    font-weight: 600 !important;
 }
 
-/* ══ FORM ══ */
-[data-testid="stForm"] {
-    background-color: rgba(255,255,255,0.75) !important;
-    border: 1.5px solid #90caf9 !important;
-    border-radius: 12px !important;
-    padding: 12px !important;
+/* ══ CHECKBOXES ══ */
+[data-testid="stCheckbox"] label {
+    color: #cbd5e1 !important;
+    font-weight: 600 !important;
 }
 
-/* ══ INPUT FIELDS ══ */
-[data-testid="stTextInput"] input,
-[data-testid="stNumberInput"] input {
-    background-color: #ffffff !important;
-    color: #1a3a5c !important;
-    border: 1.5px solid #4299e1 !important;
-    font-weight: 700 !important;
-    font-size: 15px !important;
-}
-/* FIX 3: placeholder text now clearly visible */
-[data-testid="stTextInput"] input::placeholder {
-    color: #7bafd4 !important;
-    font-weight: 500 !important;
-    opacity: 1 !important;
-}
-
-/* ══ METRICS ══ */
-[data-testid="stMetricValue"] {
-    font-size: 26px !important;
-    font-weight: 700 !important;
-    color: #2c5282 !important;
-}
-[data-testid="stMetricLabel"] {
-    color: #2c5282 !important;
-    font-weight: 700 !important;
-}
-[data-testid="stMetric"] {
-    background-color: rgba(255,255,255,0.80) !important;
-    border-radius: 10px !important;
-    padding: 8px !important;
-    border: 1px solid #90caf9 !important;
-}
-
-/* ══ TABS ══ */
-.stTabs [data-baseweb="tab-list"] {
-    background-color: rgba(255,255,255,0.70) !important;
-    border-radius: 8px !important;
-}
-.stTabs [data-baseweb="tab"] {
-    font-weight: 700 !important;
-    color: #2c5282 !important;
-}
-.stTabs [aria-selected="true"] {
-    background-color: #63b3ed !important;
-    color: #ffffff !important;
-    border-radius: 6px !important;
-}
-
-/* ══ CHARTS — do not override plotly ══ */
-.js-plotly-plot {
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-/* ══ ALERT / INFO BOXES ══ */
+/* ══ ALERT BOXES ══ */
 [data-testid="stAlert"] {
-    background-color: #ebf8ff !important;
-    color: #2c5282 !important;
-    border-radius: 8px !important;
-    border: 1px solid #90caf9 !important;
+    background: rgba(255,255,255,0.06) !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    backdrop-filter: blur(8px) !important;
 }
 [data-testid="stAlert"] p {
-    color: #2c5282 !important;
+    color: #e2e8f0 !important;
 }
 
 /* ══ EXPANDER ══ */
 [data-testid="stExpander"] {
-    background-color: rgba(255,255,255,0.80) !important;
-    border: 1px solid #90caf9 !important;
-    border-radius: 8px !important;
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 10px !important;
 }
-[data-testid="stExpander"] summary,
 [data-testid="stExpander"] summary p {
-    color: #2c5282 !important;
+    color: #cbd5e1 !important;
     font-weight: 700 !important;
-}
-
-/* ══ PROGRESS BAR ══ */
-[data-testid="stProgress"] > div > div {
-    background-color: #4299e1 !important;
-}
-[data-testid="stProgress"] {
-    background-color: #bee3f8 !important;
-}
-
-/* ══ CAPTION ══ */
-[data-testid="stCaptionContainer"] p {
-    color: #2c5282 !important;
-    font-weight: 600 !important;
 }
 
 /* ══ DATAFRAME ══ */
 [data-testid="stDataFrame"] {
-    background-color: rgba(255,255,255,0.90) !important;
-    border-radius: 8px !important;
-    border: 1px solid #90caf9 !important;
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
 }
 
-/* ══ NUMBER INPUT +/- BUTTONS ══ */
-[data-testid="stNumberInput"] button {
-    background-color: #e8f4fd !important;
-    color: #2c5282 !important;
-    border: 1px solid #90caf9 !important;
+/* ══ PROGRESS BAR ══ */
+[data-testid="stProgress"] > div > div {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa) !important;
+}
+[data-testid="stProgress"] {
+    background: rgba(255,255,255,0.1) !important;
+}
+
+/* ══ CAPTION ══ */
+[data-testid="stCaptionContainer"] p {
+    color: #64748b !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
 }
 
 /* ══ DIVIDER ══ */
 hr {
-    border-color: #90caf9 !important;
-    opacity: 0.5 !important;
+    border-color: rgba(255,255,255,0.1) !important;
 }
 
 /* ══ SPINNER ══ */
 [data-testid="stSpinner"] p {
-    color: #2c5282 !important;
-    font-weight: 700 !important;
+    color: #60a5fa !important;
+    font-weight: 600 !important;
 }
 
-/* ══ SUCCESS / INFO / WARNING ══ */
-.stSuccess, .stInfo, .stWarning, .stError {
-    color: #2c5282 !important;
-}
+/* ══ SUCCESS / WARNING / ERROR / INFO ══ */
+.stSuccess { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.3) !important; }
+.stWarning { background: rgba(245,158,11,0.15) !important; border-color: rgba(245,158,11,0.3) !important; }
+.stError   { background: rgba(239,68,68,0.15) !important;  border-color: rgba(239,68,68,0.3) !important; }
+.stInfo    { background: rgba(59,130,246,0.15) !important; border-color: rgba(59,130,246,0.3) !important; }
 
+/* ══ CUSTOM CARDS ══ */
+.airseva-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(10px);
+}
+.airseva-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.badge-low    { background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); }
+.badge-mod    { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); }
+.badge-high   { background: rgba(239,68,68,0.2);  color: #f87171; border: 1px solid rgba(239,68,68,0.4); }
+.ibm-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(30,64,175,0.3); border: 1px solid rgba(96,165,250,0.4);
+    border-radius: 6px; padding: 3px 10px;
+    font-size: 11px; font-weight: 700; color: #93c5fd;
+    letter-spacing: 0.04em;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -313,8 +254,24 @@ def aqi_category(aqi):
 # ============================================================
 
 # 1. HEADER
-st.title("🌬️ AirSeva — Agentic Air Quality Health Advisory")
-st.markdown("### Powered by Multi-Agent AI | WAQI + IBM Granite 4 (WatsonX) + Random Forest")
+    st.markdown("""
+    <div style="padding: 2rem 0 1rem 0;">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+            <span style="font-size:2.8rem;">🌬️</span>
+            <div>
+                <h1 style="margin:0; font-size:2.4rem; font-weight:800; color:#f0f9ff; letter-spacing:-0.02em;">AirSeva</h1>
+                <p style="margin:0; font-size:1rem; color:#94a3b8; font-weight:500;">Agentic Air Quality Health Advisory for Indian Communities</p>
+            </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+            <span class="ibm-tag">🔵 IBM Granite 4 · WatsonX</span>
+            <span class="ibm-tag">🤖 Random Forest ML</span>
+            <span class="ibm-tag">📡 WAQI Live Data</span>
+            <span class="ibm-tag">🏥 WHO 2021 Guidelines</span>
+        </div>
+        <hr style="margin-top:1.5rem; border-color:rgba(255,255,255,0.1);"/>
+    </div>
+    """, unsafe_allow_html=True)
 
 # City coordinate lookup for supported cities
 CITY_COORDS = {
@@ -593,14 +550,33 @@ if st.session_state["airseva_result"] is not None:
             except:
                 return ts_str
 
-        # IMPROVEMENT 4: AGENT PIPELINE STATUS BANNER
-        st.markdown("### ✅ Agent Pipeline — All Steps Complete")
-        col1, col2, col3, col4 = st.columns(4)
-        col1.success("✅ Agent 1\nData Fetched")
-        col2.success("✅ Agent 2\nRisk Predicted")
-        col3.success("✅ Agent 3\nAdvisory Generated")
-        col4.success("✅ Agent 4\nReport Compiled")
-        st.divider()
+        st.markdown("""
+    <div class="airseva-card" style="margin-bottom:24px;">
+        <p style="margin:0 0 14px 0; font-size:11px; font-weight:700; color:#64748b; letter-spacing:0.1em; text-transform:uppercase;">Agent Pipeline — All Steps Complete</p>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">
+            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+                <div style="font-size:1.5rem;">📡</div>
+                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 1</div>
+                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Data Fetched</div>
+            </div>
+            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+                <div style="font-size:1.5rem;">🧠</div>
+                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 2</div>
+                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Risk Predicted</div>
+            </div>
+            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+                <div style="font-size:1.5rem;">🔵</div>
+                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 3</div>
+                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Advisory Generated</div>
+            </div>
+            <div style="text-align:center; padding:14px; background:rgba(16,185,129,0.12); border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+                <div style="font-size:1.5rem;">📋</div>
+                <div style="font-size:11px; font-weight:700; color:#34d399; margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">Agent 4</div>
+                <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Report Compiled</div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
         # A. AQI SUMMARY
         st.subheader("📋 Air Quality & Risk Summary")
@@ -765,21 +741,20 @@ if st.session_state["airseva_result"] is not None:
         prob_col3.metric("Low Risk", f"{probs.get('Low', 0.0) * 100:.1f}%")
 
         # E. IBM GRANITE ADVISORY
-        st.markdown("### 🔵 Health Advisory (IBM Granite 4 — WatsonX)")
-        with st.spinner("🔵 Fetching IBM Granite advisory..."):
-            granite_result = get_granite_advisory(
-                city=result.get("city", city_to_run),
-                aqi=result.get("aqi_value", 0),
-                risk_level=result.get("risk_level", "Low"),
-                pollutants=result.get("pollutants", {}),
-                vulnerability_score=vulnerability_score
-            )
-        st.info(granite_result)
-        st.warning(
-            "⚠️ This advisory is for informational purposes only and does not constitute "
-            "medical advice. Please consult a healthcare professional for medical concerns, "
-            "especially for vulnerable groups."
-        )
+        st.markdown("### 🔵 Health Advisory — IBM Granite 4 (WatsonX)")
+        advisory_text = result.get("advisory", "")
+        st.markdown(f"""
+    <div class="airseva-card" style="border-left: 4px solid #3b82f6;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <span style="font-size:1.4rem;">🔵</span>
+            <span class="ibm-tag">IBM Granite 4 · granite-4-h-small · WatsonX Frankfurt</span>
+        </div>
+        <p style="color:#e2e8f0; font-size:15px; line-height:1.75; margin:0;">{advisory_text}</p>
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
+            <p style="margin:0; font-size:12px; color:#f59e0b;">⚠️ This advisory is for informational purposes only and does not constitute medical advice. Please consult a healthcare professional for medical concerns, especially for vulnerable groups.</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
         
         # IMPROVEMENT 3: FIX TIMESTAMP FORMAT
         st.caption(f"🕐 Generated at: {format_timestamp(result['timestamp'])}")
@@ -841,23 +816,15 @@ Powered by WAQI + IBM Granite 4 (WatsonX) + Random Forest ML
         )
 
 
-# ================================================================
-#  FOOTER
-# ================================================================
-st.markdown("---")
-c1, c2, c3 = st.columns(3)
-c1.markdown(
-    "<p style='color:#2c5282; font-weight:700; font-size:13px;'>"
-    "🌫 Air Quality Health Risk Prediction System</p>",
-    unsafe_allow_html=True,
-)
-c2.markdown(
-    "<p style='color:#2c5282; font-weight:700; font-size:13px; text-align:center;'>"
-    "🤖 Powered by IBM Granite 13B (WatsonX) + Random Forest ML + WAQI API</p>",
-    unsafe_allow_html=True,
-)
-c3.markdown(
-    "<p style='color:#2c5282; font-weight:700; font-size:13px; text-align:right;'>"
-    "👨‍💻 Developed by Shreenivas S B</p>",
-    unsafe_allow_html=True,
-)
+    st.markdown("""
+    <div style="margin-top:3rem; padding:2rem; background:rgba(255,255,255,0.03); border-top:1px solid rgba(255,255,255,0.08); text-align:center;">
+        <p style="margin:0 0 8px 0; font-size:1rem; font-weight:700; color:#f0f9ff;">🌬️ AirSeva — Agentic Air Quality Health Advisory</p>
+        <p style="margin:0 0 12px 0; font-size:13px; color:#64748b;">Powered by IBM Granite 4 (WatsonX) · Random Forest ML · WAQI API · WHO 2021 Guidelines</p>
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:12px;">
+            <span class="ibm-tag">🏛️ 1M1B AI for Sustainability</span>
+            <span class="ibm-tag">🔵 IBM SkillsBuild + AICTE</span>
+            <span class="ibm-tag">👨💻 Shreenivas S B · DSU Bangalore</span>
+        </div>
+        <p style="margin:0; font-size:11px; color:#334155;">SDG 3 · Good Health & Well-Being &nbsp;|&nbsp; SDG 11 · Sustainable Cities & Communities</p>
+    </div>
+    """, unsafe_allow_html=True)
