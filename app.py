@@ -45,10 +45,19 @@ st.markdown("""
 .stMarkdown p, .stMarkdown li {
     color: #2c5282 !important;
     font-weight: 600 !important;
+    font-size: 15px !important;
 }
 .stApp h1, .stApp h2, .stApp h3, .stApp h4 {
     color: #1a3a5c !important;
+    font-weight: 800 !important;
+    font-size: 1.4rem !important;
+}
+/* Subheaders specifically */
+.stApp h3 {
+    font-size: 1.25rem !important;
     font-weight: 700 !important;
+    color: #1a3a5c !important;
+    margin-top: 1.2rem !important;
 }
 
 /* ══ BUTTONS ══ */
@@ -330,20 +339,21 @@ if "airseva_outdoor_worker" not in st.session_state:
 
 st.markdown("""
 <div style="padding: 1.5rem 0 1rem 0;">
-    <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
-        <span style="font-size:2.8rem;">🌬️</span>
-        <div>
-            <h1 style="margin:0; font-size:2.4rem; font-weight:800; color:#1a3a5c; letter-spacing:-0.02em;">AirSeva</h1>
-            <p style="margin:0; font-size:1rem; color:#4a7fa5; font-weight:500;">Agentic Air Quality Health Advisory for Indian Communities</p>
-        </div>
+    <div style="margin-bottom: 6px;">
+        <h1 style="margin:0; font-size:3rem; font-weight:900; color:#1a3a5c; letter-spacing:-0.03em; line-height:1.1;">
+            🌬️ AirSeva
+        </h1>
+        <p style="margin:6px 0 0 0; font-size:1.15rem; color:#2c5282; font-weight:600; letter-spacing:0.01em;">
+            Agentic Air Quality Health Advisory for Indian Communities
+        </p>
     </div>
-    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
         <span class="ibm-tag">🔵 IBM Granite 4 · WatsonX</span>
         <span class="ibm-tag">🤖 Random Forest ML</span>
         <span class="ibm-tag">📡 WAQI Live Data</span>
         <span class="ibm-tag">🏥 WHO 2021 Guidelines</span>
     </div>
-    <hr style="margin-top:1.5rem; border-color:#90caf9;"/>
+    <hr style="margin-top:1.2rem; border:none; border-top:2px solid #90caf9;"/>
 </div>
 """, unsafe_allow_html=True)
 
@@ -382,63 +392,31 @@ with left_col:
 
     # Only sync GPS city right after detection — not on every rerun
     if st.session_state.get("airseva_gps_just_detected"):
-        st.session_state["airseva_city_input"] = st.session_state.airseva_detected_city or "Bengaluru"
+        st.session_state["airseva_city_select"] = st.session_state.airseva_detected_city or "Bengaluru"
         st.session_state["airseva_gps_just_detected"] = False
 
-    # Get current typed/detected city value from state
-    current_city_val = st.session_state.get("airseva_city_input", "Bengaluru").strip()
-
-    # Check if current_city_val is supported
     SUPPORTED_CITIES = [
-        "Ahmedabad",
-        "Aizawl", 
-        "Amaravati",
-        "Amritsar",
-        "Bengaluru",
-        "Bhopal",
-        "Brajrajnagar",
-        "Chandigarh",
-        "Chennai",
-        "Coimbatore",
-        "Delhi",
-        "Ernakulam",
-        "Gurugram",
-        "Guwahati",
-        "Hyderabad",
-        "Jaipur",
-        "Jorapokhar",
-        "Kochi",
-        "Kolkata",
-        "Lucknow",
-        "Mumbai",
-        "Patna",
-        "Shillong",
-        "Talcher",
-        "Thiruvananthapuram",
+        "Ahmedabad", "Aizawl", "Amaravati", "Amritsar", "Bengaluru",
+        "Bhopal", "Brajrajnagar", "Chandigarh", "Chennai", "Coimbatore",
+        "Delhi", "Ernakulam", "Gurugram", "Guwahati", "Hyderabad",
+        "Jaipur", "Jorapokhar", "Kochi", "Kolkata", "Lucknow",
+        "Mumbai", "Patna", "Shillong", "Talcher", "Thiruvananthapuram",
         "Visakhapatnam"
     ]
-    supported_lower = [c.lower() for c in SUPPORTED_CITIES]
-    is_supported = current_city_val.lower() in supported_lower
 
-    if is_supported:
-        city_val = st.text_input(
-            "🏙️ City / Town / Village",
-            placeholder="e.g. Bangalore, Anekal, Mysore, Hubli",
-            help="Type any city, town, or village — or use GPS above.",
-            key="airseva_city_input",
-        )
-        city_to_run = city_val.strip()
-    else:
-        st.warning(f"'{current_city_val}' is not in our supported list. Showing results for nearest city. Please select from the dropdown instead.")
-        
-        selected_fallback = st.selectbox(
-            "🏙️ City / Town / Village (Supported Fallback)",
-            options=SUPPORTED_CITIES,
-            index=SUPPORTED_CITIES.index("Bengaluru"),
-            key="airseva_city_input_fallback"
-        )
-        st.session_state["airseva_city_input"] = selected_fallback
-        city_to_run = selected_fallback
+    # Get GPS-detected city if available, else default to Bengaluru
+    gps_city = st.session_state.get("airseva_detected_city", None)
+    default_index = SUPPORTED_CITIES.index(gps_city) if gps_city in SUPPORTED_CITIES else SUPPORTED_CITIES.index("Bengaluru")
+
+    selected_city = st.selectbox(
+        "🏙️ Select Your City",
+        options=SUPPORTED_CITIES,
+        index=default_index,
+        key="airseva_city_select",
+        help="Select your nearest city from the list, or use GPS above to auto-detect."
+    )
+    city_to_run = selected_city
+    st.session_state["airseva_city_input"] = selected_city
 
     st.markdown("### 🧍 Personal Health Profile")
     st.caption("Your profile personalises the health risk advice.")
