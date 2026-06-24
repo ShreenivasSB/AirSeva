@@ -1,4 +1,4 @@
-﻿"""
+"""
 redesign_ppt.py
 Rebuilds AirSeva_1M1B_Submission_Redesigned.pptx with a clean,
 professional layout. Text content unchanged; only visual design changes.
@@ -133,7 +133,7 @@ def set_para(para, text, size, color, bold=False, italic=False,
 
 
 def box_content(shape, heading, body_lines,
-                h_size=Pt(16), b_size=Pt(13),
+                h_size=Pt(16), b_size=Pt(15),
                 pad_l=Inches(0.25), pad_t=Inches(0.25)):
     """Fill a shape's text frame with a bold heading + body lines."""
     tf = shape.text_frame
@@ -197,7 +197,7 @@ def slide1(prs):
     tf3.word_wrap = True
     for i, line in enumerate(info_lines):
         p = tf3.paragraphs[0] if i == 0 else tf3.add_paragraph()
-        set_para(p, line, Pt(14), MID_GREY, align=PP_ALIGN.CENTER, space_after=Pt(3))
+        set_para(p, line, Pt(15), MID_GREY, align=PP_ALIGN.CENTER, space_after=Pt(3))
 
     # Live URL box
     url_box = flat_box(sl, Inches(2.5), Inches(5.0), Inches(8.3), Inches(0.55))
@@ -208,7 +208,7 @@ def slide1(prs):
     tf4.margin_top   = Inches(0.1)
     p4 = tf4.paragraphs[0]
     set_para(p4, "Live App: https://airseva-4uzac5mbekkwmzvdt4rsux.streamlit.app",
-             Pt(12), NAVY, align=PP_ALIGN.CENTER)
+             Pt(13), NAVY, align=PP_ALIGN.CENTER)
 
     footer(sl)
 
@@ -257,7 +257,7 @@ def slide3(prs):
         "How might we use AI to provide accessible, real-time, and location-specific "
         "air quality health advisories so that communities across India \u2014 especially "
         "vulnerable groups \u2014 can take timely precautions and become more resilient to air pollution?",
-        Pt(14), DARK_GREY, italic=True, align=PP_ALIGN.CENTER)
+        Pt(16), DARK_GREY, italic=True, align=PP_ALIGN.CENTER)
 
     # Three boxes
     three = [
@@ -300,7 +300,7 @@ def slide4(prs):
     for (heading, body), lft in zip(agents, box_lefts):
         box = flat_box(sl, lft, Inches(1.1), Inches(2.1), Inches(4.3))
         box_content(box, heading, body,
-                    h_size=Pt(14), b_size=Pt(11))
+                    h_size=Pt(14), b_size=Pt(13))
 
     for al in arr_lefts:
         arrow_shape(sl, al, arr_center)
@@ -311,7 +311,7 @@ def slide4(prs):
     set_para(p,
         "Stack: Python  \u00b7  Streamlit  \u00b7  scikit-learn  \u00b7  "
         "IBM Granite 4 (WatsonX)  \u00b7  WAQI API  \u00b7  WHO 2021 Guidelines",
-        Pt(11), MID_GREY, align=PP_ALIGN.CENTER)
+        Pt(12), MID_GREY, align=PP_ALIGN.CENTER)
 
     footer(sl)
 
@@ -403,7 +403,7 @@ def slide7(prs):
     p = t.text_frame.paragraphs[0]
     set_para(p,
         "Aligned with India\u2019s national health and sustainability goals under SDG 3 and SDG 11",
-        Pt(12), MID_GREY, italic=True, align=PP_ALIGN.CENTER)
+        Pt(13), MID_GREY, italic=True, align=PP_ALIGN.CENTER)
 
     footer(sl)
 
@@ -425,7 +425,7 @@ def slide8(prs):
         "\u2192  Dashboard displays results + download",
     ]
     box_l = flat_box(sl, Inches(0.4), Inches(1.1), Inches(5.9), Inches(4.8))
-    box_content(box_l, "Agent Flow", flow_body, b_size=Pt(12))
+    box_content(box_l, "Agent Flow", flow_body, b_size=Pt(14))
 
     # Right — Key Features
     feat_body = [
@@ -439,7 +439,7 @@ def slide8(prs):
         "\u2714  Medical disclaimer included",
     ]
     box_r = flat_box(sl, Inches(6.9), Inches(1.1), Inches(5.9), Inches(4.8))
-    box_content(box_r, "Key Features", feat_body, b_size=Pt(12))
+    box_content(box_r, "Key Features", feat_body, b_size=Pt(14))
 
     # Single link line
     t = add_tb(sl, Inches(0.4), Inches(6.1), Inches(12.5), Inches(0.3))
@@ -447,7 +447,7 @@ def slide8(prs):
     set_para(p,
         "Live App: https://airseva-4uzac5mbekkwmzvdt4rsux.streamlit.app"
         "   |   GitHub: https://github.com/ShreenivasSB/AirSeva",
-        Pt(10), NAVY, align=PP_ALIGN.CENTER)
+        Pt(12), NAVY, align=PP_ALIGN.CENTER)
 
     footer(sl)
 
@@ -472,7 +472,7 @@ def slide9(prs):
         "decisions based on real-time air quality data across 26 Indian cities. By translating "
         "raw pollutant data into clear, actionable advisories, it bridges the gap between "
         "complex environmental monitoring and everyday public health behaviour.",
-        Pt(15), DARK_GREY, italic=True, align=PP_ALIGN.CENTER)
+        Pt(17), DARK_GREY, italic=True, align=PP_ALIGN.CENTER)
 
     # Two side boxes
     sides = [
@@ -494,7 +494,7 @@ def slide9(prs):
     set_para(p,
         "Built with IBM Granite 4  \u00b7  WatsonX AI  \u00b7  Random Forest ML  "
         "\u00b7  WAQI API  \u00b7  WHO 2021 Standards",
-        Pt(11), MID_GREY, align=PP_ALIGN.CENTER)
+        Pt(12), MID_GREY, align=PP_ALIGN.CENTER)
 
     footer(sl)
 
