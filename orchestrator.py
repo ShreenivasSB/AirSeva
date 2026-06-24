@@ -16,17 +16,14 @@ if not os.getenv("WAQI_TOKEN"):
     load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
 
 # Rules: Load .env before any agent imports
-from agents.agent_1_data_fetcher import fetch_data
+from agents.agent_1_data_fetcher import fetch_data, fetch_data_by_coords
 from agents.agent_2_ml_prediction import predict
 from agents.agent_3_advisory import generate_advisory
 from agents.agent_4_report import compile_report, report_to_text
 
 
 # 2. Define main function
-def run_airseva(
-    city: str,
-    vulnerability_score: int = 0
-) -> dict:
+def run_airseva(city: str, vulnerability_score: int = 0, lat: float = None, lon: float = None) -> dict:
     """
     Orchestrates the AirSeva 4-agent agentic AI system.
     
@@ -34,11 +31,16 @@ def run_airseva(
     handles errors cleanly by logging and re-raising, prints the human-readable
     report summary, and returns the final report dictionary.
     """
-    logger.info(f"Starting AirSeva run for city: {city} with vulnerability score: {vulnerability_score}")
+    logger.info(f"Starting AirSeva run for city: {city}, GPS: ({lat}, {lon}), vulnerability score: {vulnerability_score}")
 
     # Step 1: Call fetch_data(city)
     try:
-        agent1_output = fetch_data(city)
+        if lat is not None and lon is not None:
+            logger.info(f"Using GPS fetch: lat={lat}, lon={lon}")
+            agent1_output = fetch_data_by_coords(lat, lon)
+        else:
+            logger.info(f"Using city fetch: {city}")
+            agent1_output = fetch_data(city)
     except Exception as e:
         logger.error(f"Agent 1 failed — {e}")
         raise e

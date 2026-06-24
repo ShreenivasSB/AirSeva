@@ -4,6 +4,10 @@ AirSeva is a 4-agent agentic AI system designed to provide real-time air quality
 
 Developed as part of the **1M1B AI for Sustainability** internship in collaboration with **IBM SkillsBuild + AICTE** at **Dayananda Sagar University, Bangalore**.
 
+## 🔗 Live Demo & Repository
+- **Live App**: https://airseva-4uzac5mbekkwmzvdt4rsux.streamlit.app
+- **GitHub**: https://github.com/ShreenivasSB/AirSeva
+
 ---
 
 ## 📖 Project Overview
@@ -16,11 +20,12 @@ AirSeva operates as an orchestrated multi-agent system that bridges environmenta
 
 - **4-Agent Pipeline**: Highly modularized agent workflow orchestrated in sequence to fetch data, predict risk, generate advisories, and compile reports.
 - **📍 GPS Snapping & Fallback**: Snaps user's GPS coordinates to the nearest supported city or allows selection via search/dropdown.
+- **📥 Downloadable PDF Reports**: Exports a formatted health report as a PDF including AQI, pollutant readings, WHO warnings, model probabilities, and IBM Granite advisory.
 - **👤 Personal Health Profile**: Dynamic inputs for age, asthma, smoking status, and outdoor work conditions.
 - **🧮 Personalized Vulnerability Score (0–8)**: A weighted index highlighting the user's specific susceptibility to air pollution.
 - **🤖 Machine Learning Risk Prediction**: Random Forest model predicting health risk level (Low / Moderate / High) with classification confidence.
 - **📊 WHO 2021 Guidelines Comparison**: Interactive bar charts comparing live chemical readings against strict WHO 2021 limit standards.
-- **📥 Downloadable Reports**: Exports clean summaries as TXT files or formatted PDFs complete with health recommendations.
+- **📥 Downloadable Reports**: Exports clean summaries as formatted PDFs complete with health recommendations.
 
 ---
 
@@ -61,11 +66,11 @@ flowchart TD
 
 - **Core & Logic**: Python 3.10+
 - **Frontend / Web App**: Streamlit
-- **ML Framework**: scikit-learn 1.8.0 (Random Forest Classifier)
+- **ML Framework**: scikit-learn >=1.4.0 (Random Forest Classifier)
 - **Generative AI API**: ibm-watsonx-ai (using `ibm/granite-4-h-small` via WatsonX Frankfurt)
 - **Data APIs**: WAQI API (World Air Quality Index), Open-Meteo Air Quality API
 - **Data Processing**: pandas, numpy
-- **Visualization**: Plotly, Folium, streamlit-folium
+- **Visualization**: Plotly
 - **PDF Generation**: fpdf2
 
 ---
@@ -87,6 +92,7 @@ SRP_PROJECT/
 ├── notebooks/                   # Jupyter notebooks for model development & EDA
 ├── app.py                       # Main Streamlit dashboard application
 ├── orchestrator.py              # CLI & module execution manager orchestrating all 4 agents
+├── granite_advisory.py          # IBM WatsonX AI API call wrapper for Granite 4
 ├── requirements.txt             # Project library dependencies
 └── .env                         # Local environment configuration file (ignored in Git)
 ```

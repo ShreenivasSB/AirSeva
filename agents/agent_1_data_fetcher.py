@@ -233,28 +233,26 @@ def fetch_data(city: str) -> dict:
         logger.info(f"Attempting requested URL format: {waqi_url_requested}")
         response = requests.get(waqi_url_requested, timeout=10)
         response.raise_for_status()
-        waqi_response = response.json()
+        data = response.json()
         
         # If it returns "Unknown station" or fails, we fallback to the working format without '@'
-        if waqi_response.get("status") != "ok" and "Unknown station" in str(waqi_response.get("data", "")):
+        if data.get("status") != "ok" and "Unknown station" in str(data.get("data", "")):
             logger.warning("Requested URL format failed with 'Unknown station'. Retrying without '@' prefix...")
             logger.info(f"Attempting working URL format: {waqi_url_fallback}")
             response = requests.get(waqi_url_fallback, timeout=10)
             response.raise_for_status()
-            waqi_response = response.json()
+            data = response.json()
             
     except Exception as e:
         error_msg = f"WAQI API connection failed: {e}"
         logger.error(error_msg)
         raise RuntimeError(error_msg) from e
 
-    if waqi_response.get("status") != "ok":
-        error_msg = f"WAQI API returned non-ok status. Detail: {waqi_response.get('data', 'Unknown error')}"
-        logger.error(error_msg)
-        raise RuntimeError(error_msg)
+    if data.get("status") != "ok":
+        raise ValueError(f"WAQI returned no data for '{city}'. Try Delhi, Mumbai, or Bengaluru.")
 
     # Step 4: Parse pollutants from WAQI response
-    data_block = waqi_response.get("data", {})
+    data_block = data.get("data", {})
     iaqi_block = data_block.get("iaqi", {})
     
     # Extract raw AQI
@@ -382,3 +380,173 @@ def fetch_data(city: str) -> dict:
     
     logger.info(f"Data fetch completed successfully for '{city}'")
     return result_dict
+
+
+def fetch_data_by_coords(lat: float, lon: float, nearest_city: str = None) -> dict:
+    """
+    Fetches live air quality data from WAQI API using GPS coordinates.
+    Uses the geo endpoint: api.waqi.info/feed/geo:{lat};{lon}/
+    Falls back to fetch_data(nearest_city) if geo endpoint fails.
+    Uses nearest_city encoding for ML model features.
+
+    Args:
+        lat (float): GPS latitude
+        lon (float): GPS longitude
+        nearest_city (str, optional): Nearest supported city name for ML encoding
+
+    Returns:
+        dict: Same structure as fetch_data() return value
+    """
+    if not nearest_city:
+        import math
+        def haversine(lat1, lon1, lat2, lon2):
+            R = 6371
+            dlat = math.radians(lat2 - lat1)
+            dlon = math.radians(lon2 - lon1)
+            a = math.sin(dlat/2)**2 + math.cos(math.radians(lat1)) \
+                * math.cos(math.radians(lat2)) * math.sin(dlon/2)**2
+            return R * 2 * math.asin(math.sqrt(a))
+        
+        nearest_city_key = min(CITY_DATA.keys(), 
+                               key=lambda c: haversine(lat, lon, 
+                                                       CITY_DATA[c]["coords"][0], 
+                                                       CITY_DATA[c]["coords"][1]))
+        nearest_city = CITY_DATA[nearest_city_key]["name"]
+
+    logger.info(f"Fetching data by GPS coords: lat={lat}, lon={lon}, nearest_city={nearest_city}")
+
+    if not WAQI_TOKEN:
+        raise RuntimeError("WAQI_TOKEN environment variable is missing.")
+
+    # Step 1: Call WAQI geo endpoint
+    geo_url = f"https://api.waqi.info/feed/geo:{lat};{lon}/?token={WAQI_TOKEN}"
+    logger.info(f"Calling WAQI geo endpoint: {geo_url}")
+
+    try:
+        response = requests.get(geo_url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+    except Exception as e:
+        logger.warning(f"WAQI geo endpoint failed: {e}. Falling back to city-based fetch.")
+        return fetch_data(nearest_city)
+
+    if data.get("status") != "ok":
+        raise ValueError(f"WAQI returned no data for coordinates ({lat}, {lon}). Try selecting a city manually.")
+
+    # Step 2: Parse pollutants (same logic as fetch_data)
+    data_block = data.get("data", {})
+    iaqi_block = data_block.get("iaqi", {})
+
+    raw_aqi = data_block.get("aqi")
+    try:
+        aqi_value = int(raw_aqi) if raw_aqi is not None else 0
+    except (ValueError, TypeError):
+        aqi_value = 0
+
+    def get_val(key, default=0.0):
+        val_dict = iaqi_block.get(key)
+        if isinstance(val_dict, dict):
+            val = val_dict.get("v")
+            if val is not None:
+                try:
+                    return float(val)
+                except (ValueError, TypeError):
+                    pass
+        return default
+
+    pm25 = get_val("pm25")
+    pm10 = get_val("pm10")
+    no2  = get_val("no2")
+    so2  = get_val("so2")
+    co   = get_val("co")
+    o3   = get_val("o3")
+    benzene = get_val("benzene", 0.0)
+
+    # Step 3: Get station name for logging
+    station_name = data_block.get("city", {}).get("name", "Unknown Station")
+    logger.info(f"GPS resolved to WAQI station: {station_name}")
+    logger.info(f"Pollutants: pm25={pm25}, pm10={pm10}, no2={no2}, so2={so2}, co={co}, o3={o3}")
+
+    # Step 4: Get ML encoding from nearest supported city
+    city_clean = nearest_city.strip().lower()
+    city_info = CITY_DATA.get(city_clean, CITY_DATA["bengaluru"])
+    city_encoded = city_info["encoded"]
+    city_lat, city_lon = city_info["coords"]
+
+    # Step 5: Fetch historical PM2.5 from Open-Meteo using actual GPS coords
+    open_meteo_url = "https://air-quality-api.open-meteo.com/v1/air-quality"
+    om_params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": "pm2_5",
+        "past_days": 7,
+        "forecast_days": 1
+    }
+
+    pm25_history = []
+    try:
+        om_response = requests.get(open_meteo_url, params=om_params, timeout=10)
+        om_response.raise_for_status()
+        om_data = om_response.json()
+        pm25_history = om_data.get("hourly", {}).get("pm2_5", [])
+    except Exception as e:
+        logger.warning(f"Open-Meteo fetch failed for GPS coords: {e}")
+
+    # Step 6: Compute lag/rolling features
+    try:
+        s = pd.Series(pm25_history).dropna().reset_index(drop=True)
+
+        def get_lag(series, lag, fallback):
+            if len(series) > lag:
+                val = series.shift(lag).iloc[-1]
+                if not pd.isna(val):
+                    return float(val)
+            return fallback
+
+        def get_roll(series, window, fallback):
+            if len(series) >= window:
+                val = series.rolling(window).mean().iloc[-1]
+                if not pd.isna(val):
+                    return float(val)
+            return fallback
+
+        pm25_lag_1  = get_lag(s, 24,  pm25)
+        pm25_lag_3  = get_lag(s, 72,  pm25)
+        pm25_lag_7  = get_lag(s, 168, pm25)
+        pm25_roll_3 = get_roll(s, 72,  pm25)
+        pm25_roll_7 = get_roll(s, 168, pm25)
+    except Exception as e:
+        logger.warning(f"Lag/rolling computation failed: {e}")
+        pm25_lag_1 = pm25_lag_3 = pm25_lag_7 = pm25_roll_3 = pm25_roll_7 = pm25
+
+    # Step 7: IST datetime features
+    tz_ist = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
+    now_ist = datetime.datetime.now(tz_ist)
+
+    return {
+        "pm25": pm25,
+        "pm10": pm10,
+        "no": IMPUTED_NO,
+        "no2": no2,
+        "nox": IMPUTED_NOX,
+        "nh3": IMPUTED_NH3,
+        "co": co,
+        "so2": so2,
+        "o3": o3,
+        "benzene": benzene,
+        "toluene": IMPUTED_TOLUENE,
+        "xylene": IMPUTED_XYLENE,
+        "city_encoded": city_encoded,
+        "pm25_lag_1": pm25_lag_1,
+        "pm25_lag_3": pm25_lag_3,
+        "pm25_lag_7": pm25_lag_7,
+        "pm25_roll_3": pm25_roll_3,
+        "pm25_roll_7": pm25_roll_7,
+        "year":        now_ist.year,
+        "month":       now_ist.month,
+        "day":         now_ist.day,
+        "day_of_week": now_ist.weekday(),
+        "aqi_value":   aqi_value,
+        "city":        f"{nearest_city} (GPS: {lat:.4f}, {lon:.4f})",
+        "gps_station": station_name
+    }

@@ -41,16 +41,24 @@ st.markdown("""
 }
 
 /* ══ ALL TEXT ══ */
-.stApp p, .stApp li, .stApp span, .stApp label, .stApp div,
-.stMarkdown p, .stMarkdown li {
+.stApp p, .stApp li, .stMarkdown p, .stMarkdown li {
     color: #2c5282 !important;
     font-weight: 600 !important;
-    font-size: 15px !important;
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
+}
+.stApp label {
+    color: #2c5282 !important;
+    font-weight: 600 !important;
+    font-size: 1.0rem !important;
+}
+.stApp span {
+    color: #2c5282 !important;
+    font-weight: 600 !important;
 }
 .stApp h1, .stApp h2, .stApp h3, .stApp h4 {
     color: #1a3a5c !important;
     font-weight: 800 !important;
-    font-size: 1.4rem !important;
 }
 /* Subheaders specifically */
 .stApp h3 {
@@ -245,6 +253,24 @@ div[data-testid="stDataFrame"] > div {
     background-color: rgba(255,255,255,0.95) !important;
     border-radius: 10px !important;
 }
+
+/* Selectbox fix — white background, blue border */
+div[data-baseweb="select"] > div {
+    background-color: #ffffff !important;
+    border: 1.5px solid #1a6baa !important;
+    border-radius: 8px !important;
+    color: #1a3a5c !important;
+}
+div[data-baseweb="select"] span {
+    color: #1a3a5c !important;
+}
+div[data-baseweb="select"] svg {
+    color: #1a6baa !important;
+}
+.stSelectbox label {
+    color: #1a3a5c !important;
+    font-weight: 600 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -338,22 +364,19 @@ if "airseva_outdoor_worker" not in st.session_state:
     st.session_state["airseva_outdoor_worker"] = False
 
 st.markdown("""
-<div style="padding: 1.5rem 0 1rem 0;">
-    <div style="margin-bottom: 6px;">
-        <h1 style="margin:0; font-size:3rem; font-weight:900; color:#1a3a5c; letter-spacing:-0.03em; line-height:1.1;">
-            🌬️ AirSeva
-        </h1>
-        <p style="margin:6px 0 0 0; font-size:1.15rem; color:#2c5282; font-weight:600; letter-spacing:0.01em;">
-            Agentic Air Quality Health Advisory for Indian Communities
-        </p>
+<div style="text-align:center; padding: 2rem 1rem 1rem 1rem;">
+    <div style="font-size: 4.5rem; font-weight: 900; color: #1a3a5c; letter-spacing: -2px; line-height: 1.0;">
+        <span style="font-size: 3.8rem;">&#127758;</span> AirSeva
     </div>
-    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-        <span class="ibm-tag">🔵 IBM Granite 4 · WatsonX</span>
-        <span class="ibm-tag">🤖 Random Forest ML</span>
-        <span class="ibm-tag">📡 WAQI Live Data</span>
-        <span class="ibm-tag">🏥 WHO 2021 Guidelines</span>
+    <div style="font-size: 1.35rem; color: #2c5f8a; font-weight: 500; margin-top: 0.4rem; letter-spacing: 0.5px;">
+        AI-Powered Air Quality Health Advisory for Indian Communities
     </div>
-    <hr style="margin-top:1.2rem; border:none; border-top:2px solid #90caf9;"/>
+    <div style="margin-top: 0.7rem; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+        <span style="background:#1a6baa; color:white; padding:3px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">IBM Granite 4</span>
+        <span style="background:#2c7be5; color:white; padding:3px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">WatsonX AI</span>
+        <span style="background:#17a2b8; color:white; padding:3px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">4-Agent Pipeline</span>
+        <span style="background:#28a745; color:white; padding:3px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">SDG 3 & 11</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -411,7 +434,6 @@ with left_col:
     selected_city = st.selectbox(
         "🏙️ Select Your City",
         options=SUPPORTED_CITIES,
-        index=default_index,
         key="airseva_city_select",
         help="Select your nearest city from the list, or use GPS above to auto-detect."
     )
@@ -469,11 +491,15 @@ with left_col:
             with st.spinner("⏳ Running multi-agent analysis... 15–30 seconds"):
                 try:
                     # Call orchestrator
-                    result = run_airseva(city_to_run, vulnerability_score)
+                    gps_lat = st.session_state.get("airseva_detected_lat", None)
+                    gps_lon = st.session_state.get("airseva_detected_lon", None)
+                    result = run_airseva(city_to_run, vulnerability_score, lat=gps_lat, lon=gps_lon)
                     # Store result
                     st.session_state["airseva_result"] = result
+                except ValueError as ve:
+                    st.warning(f"⚠️ {ve}")
+                    st.info("💡 Live data unavailable for this location. Please select Delhi, Mumbai, or Bengaluru from the dropdown.")
                 except Exception as e:
-                    # Python exception handling
                     st.error("⚠️ Unexpected error. Please try again.")
                     import traceback
                     traceback.print_exc()
