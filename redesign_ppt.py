@@ -10,6 +10,14 @@ from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
 from pptx.oxml.ns import qn
 from lxml import etree
+import os
+
+# Screenshot of the live AirSeva Streamlit app (captured via browser)
+APP_SCREENSHOT = (
+    r"C:\Users\shree\.gemini\antigravity-ide\brain"
+    r"\3782a8ba-ef8c-44fb-8f0a-50f73dec9bb5"
+    r"\airseva_dashboard_1782325407729.png"
+)
 
 # ── Palette ─────────────────────────────────────────────────────────────────
 WHITE       = RGBColor(255, 255, 255)
@@ -415,7 +423,7 @@ def slide8(prs):
     slide_title(sl, "Prototype & Demo")
     divider(sl)
 
-    # Left — Agent Flow
+    # Left — Agent Flow box
     flow_body = [
         "User selects city + health profile",
         "\u2192  Agent 1: Fetches live AQI + pollutant data",
@@ -424,25 +432,47 @@ def slide8(prs):
         "\u2192  Agent 4: Compiles PDF report",
         "\u2192  Dashboard displays results + download",
     ]
-    box_l = flat_box(sl, Inches(0.4), Inches(1.1), Inches(5.9), Inches(4.8))
+    box_l = flat_box(sl, Inches(0.4), Inches(1.1), Inches(5.5), Inches(4.8))
     box_content(box_l, "Agent Flow", flow_body, b_size=Pt(14))
 
-    # Right — Key Features
-    feat_body = [
-        "\u2714  GPS location detection",
-        "\u2714  26 Indian cities supported",
-        "\u2714  WHO 2021 guideline comparison",
-        "\u2714  Personalised vulnerability score (0\u20138)",
-        "\u2714  AQI gauge + pollutant bar chart",
-        "\u2714  IBM Granite 4 health advisory",
-        "\u2714  Downloadable PDF report",
-        "\u2714  Medical disclaimer included",
-    ]
-    box_r = flat_box(sl, Inches(6.9), Inches(1.1), Inches(5.9), Inches(4.8))
-    box_content(box_r, "Key Features", feat_body, b_size=Pt(14))
+    # Right — Live app screenshot with a thin label above
+    # Label
+    lbl = add_tb(sl, Inches(6.2), Inches(1.1), Inches(6.73), Inches(0.32))
+    p_lbl = lbl.text_frame.paragraphs[0]
+    set_para(p_lbl, "Live App — AirSeva Dashboard", Pt(13), NAVY,
+             bold=True, align=PP_ALIGN.LEFT)
+
+    # Screenshot image — embed within a flat box border
+    img_left  = Inches(6.2)
+    img_top   = Inches(1.48)
+    img_width = Inches(6.73)
+    img_height = Inches(4.42)
+
+    # Flat box as border/frame behind image
+    frame = flat_box(sl, img_left, img_top, img_width, img_height)
+
+    # Embed the screenshot (slightly inset so the frame shows)
+    if os.path.exists(APP_SCREENSHOT):
+        sl.shapes.add_picture(
+            APP_SCREENSHOT,
+            img_left + Inches(0.05),
+            img_top  + Inches(0.05),
+            img_width  - Inches(0.1),
+            img_height - Inches(0.1),
+        )
+
+    # Key Features — compact single line below both panels
+    feat_lines = (
+        "\u2714 GPS detection  \u00b7  \u2714 26 cities  \u00b7  \u2714 WHO 2021 guidelines  \u00b7  "
+        "\u2714 Vulnerability score (0\u20138)  \u00b7  \u2714 IBM Granite 4 advisory  \u00b7  "
+        "\u2714 Downloadable PDF  \u00b7  \u2714 Medical disclaimer"
+    )
+    t_feat = add_tb(sl, Inches(0.4), Inches(6.05), Inches(12.53), Inches(0.32))
+    p_feat = t_feat.text_frame.paragraphs[0]
+    set_para(p_feat, feat_lines, Pt(11), DARK_GREY, align=PP_ALIGN.CENTER)
 
     # Single link line
-    t = add_tb(sl, Inches(0.4), Inches(6.1), Inches(12.5), Inches(0.3))
+    t = add_tb(sl, Inches(0.4), Inches(6.5), Inches(12.53), Inches(0.28))
     p = t.text_frame.paragraphs[0]
     set_para(p,
         "Live App: https://airseva-4uzac5mbekkwmzvdt4rsux.streamlit.app"
