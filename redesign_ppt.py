@@ -417,62 +417,58 @@ def slide7(prs):
 
 
 def slide8(prs):
-    """Prototype & Demo."""
+    """Prototype & Demo — architecture diagram left, app screenshot right."""
     sl = prs.slides.add_slide(prs.slide_layouts[6])
     white_bg(sl)
     slide_title(sl, "Prototype & Demo")
     divider(sl)
 
-    # Left — Agent Flow box
-    flow_body = [
-        "User selects city + health profile",
-        "\u2192  Agent 1: Fetches live AQI + pollutant data",
-        "\u2192  Agent 2: Random Forest predicts risk level",
-        "\u2192  Agent 3: IBM Granite 4 generates advisory",
-        "\u2192  Agent 4: Compiles PDF report",
-        "\u2192  Dashboard displays results + download",
-    ]
-    box_l = flat_box(sl, Inches(0.4), Inches(1.1), Inches(5.5), Inches(4.8))
-    box_content(box_l, "Agent Flow", flow_body, b_size=Pt(14))
+    ARCH_PNG = r"C:\SRP_PROJECT\assets\architecture_diagram.png"
 
-    # Right — Live app screenshot with a thin label above
-    # Label
-    lbl = add_tb(sl, Inches(6.2), Inches(1.1), Inches(6.73), Inches(0.32))
-    p_lbl = lbl.text_frame.paragraphs[0]
-    set_para(p_lbl, "Live App — AirSeva Dashboard", Pt(13), NAVY,
-             bold=True, align=PP_ALIGN.LEFT)
+    # ── Left panel: Architecture diagram image ──────────────────────────────
+    lbl_l = add_tb(sl, Inches(0.4), Inches(1.1), Inches(6.0), Inches(0.32))
+    set_para(lbl_l.text_frame.paragraphs[0],
+             "System Architecture \u2014 4-Agent Pipeline",
+             Pt(13), NAVY, bold=True, align=PP_ALIGN.LEFT)
 
-    # Screenshot image — embed within a flat box border
-    img_left  = Inches(6.2)
-    img_top   = Inches(1.48)
-    img_width = Inches(6.73)
-    img_height = Inches(4.42)
+    arch_left   = Inches(0.4)
+    arch_top    = Inches(1.48)
+    arch_width  = Inches(6.0)
+    arch_height = Inches(5.25)
 
-    # Flat box as border/frame behind image
-    frame = flat_box(sl, img_left, img_top, img_width, img_height)
+    frame_l = flat_box(sl, arch_left, arch_top, arch_width, arch_height)
+    if os.path.exists(ARCH_PNG):
+        sl.shapes.add_picture(
+            ARCH_PNG,
+            arch_left  + Inches(0.05),
+            arch_top   + Inches(0.05),
+            arch_width  - Inches(0.1),
+            arch_height - Inches(0.1),
+        )
 
-    # Embed the screenshot (slightly inset so the frame shows)
+    # ── Right panel: Live app screenshot ────────────────────────────────────
+    lbl_r = add_tb(sl, Inches(6.7), Inches(1.1), Inches(6.23), Inches(0.32))
+    set_para(lbl_r.text_frame.paragraphs[0],
+             "Live App \u2014 AirSeva Dashboard",
+             Pt(13), NAVY, bold=True, align=PP_ALIGN.LEFT)
+
+    img_left   = Inches(6.7)
+    img_top    = Inches(1.48)
+    img_width  = Inches(6.23)
+    img_height = Inches(5.25)
+
+    frame_r = flat_box(sl, img_left, img_top, img_width, img_height)
     if os.path.exists(APP_SCREENSHOT):
         sl.shapes.add_picture(
             APP_SCREENSHOT,
-            img_left + Inches(0.05),
-            img_top  + Inches(0.05),
+            img_left  + Inches(0.05),
+            img_top   + Inches(0.05),
             img_width  - Inches(0.1),
             img_height - Inches(0.1),
         )
 
-    # Key Features — compact single line below both panels
-    feat_lines = (
-        "\u2714 GPS detection  \u00b7  \u2714 26 cities  \u00b7  \u2714 WHO 2021 guidelines  \u00b7  "
-        "\u2714 Vulnerability score (0\u20138)  \u00b7  \u2714 IBM Granite 4 advisory  \u00b7  "
-        "\u2714 Downloadable PDF  \u00b7  \u2714 Medical disclaimer"
-    )
-    t_feat = add_tb(sl, Inches(0.4), Inches(6.05), Inches(12.53), Inches(0.32))
-    p_feat = t_feat.text_frame.paragraphs[0]
-    set_para(p_feat, feat_lines, Pt(11), DARK_GREY, align=PP_ALIGN.CENTER)
-
-    # Single link line
-    t = add_tb(sl, Inches(0.4), Inches(6.5), Inches(12.53), Inches(0.28))
+    # ── Link line ───────────────────────────────────────────────────────────
+    t = add_tb(sl, Inches(0.4), Inches(6.88), Inches(12.53), Inches(0.28))
     p = t.text_frame.paragraphs[0]
     set_para(p,
         "Live App: https://airseva-4uzac5mbekkwmzvdt4rsux.streamlit.app"
