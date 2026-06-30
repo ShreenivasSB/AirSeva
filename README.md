@@ -23,9 +23,40 @@ AirSeva operates as an orchestrated multi-agent system that bridges environmenta
 - **📥 Downloadable PDF Reports**: Exports a formatted health report as a PDF including AQI, pollutant readings, WHO warnings, model probabilities, and IBM Granite advisory.
 - **👤 Personal Health Profile**: Dynamic inputs for age, asthma, smoking status, and outdoor work conditions.
 - **🧮 Personalized Vulnerability Score (0–8)**: A weighted index highlighting the user's specific susceptibility to air pollution.
-- **🤖 Machine Learning Risk Prediction**: Random Forest model predicting health risk level (Low / Moderate / High) with classification confidence.
+- **🤖 Machine Learning Risk Prediction**: Random Forest classifier (100 trees, `random_state=42`) predicts health risk level (Low / Moderate / High) with **89.6% test accuracy** (macro F1 = 0.90) on a held-out 20% split of 5,209 CPCB records.
 - **📊 WHO 2021 Guidelines Comparison**: Interactive bar charts comparing live chemical readings against strict WHO 2021 limit standards.
 - **📥 Downloadable Reports**: Exports clean summaries as formatted PDFs complete with health recommendations.
+
+---
+
+## 📈 ML Model Performance
+
+The health-risk classifier was trained on the CPCB `city_day_cleaned.csv` dataset (29,531 rows, 26 Indian cities, 2015–2020). Three models were evaluated on an 80/20 random split (`random_state=42`). The Random Forest was selected and serialised as `models/health_risk_rf_model.pkl`.
+
+### Model Comparison (test set n = 5,209)
+
+| Model | Accuracy |
+|---|---|
+| Logistic Regression | 85.8% |
+| Decision Tree | 84.6% |
+| **Random Forest** ✅ | **89.6%** |
+
+### Random Forest — Full Classification Report
+
+| Class | Precision | Recall | F1-score | Support |
+|---|---|---|---|---|
+| High | 0.94 | 0.93 | 0.93 | 1,339 |
+| Low | 0.92 | 0.90 | 0.91 | 2,072 |
+| Moderate | 0.84 | 0.87 | 0.85 | 1,798 |
+| **Weighted avg** | **0.90** | **0.90** | **0.90** | **5,209** |
+
+A confusion matrix was also generated during training (see `notebooks/03_feature_engineering.ipynb`, Cell 12).
+
+> **Note on the 100% accuracy run**: An earlier experimental split in the notebook produced 100% accuracy because the `aqi` column (from which the `risk` label is directly derived via AQI thresholds) was inadvertently included as a feature, causing label leakage. This run was discarded; the saved `.pkl` model uses only the 22 pollutant + engineered features listed below.
+
+### Features used by the saved model (22 total)
+
+`pm25`, `pm10`, `no`, `no2`, `nox`, `nh3`, `co`, `so2`, `o3`, `benzene`, `toluene`, `xylene`, `city_encoded`, `pm25_lag_1`, `pm25_lag_3`, `pm25_lag_7`, `pm25_roll_3`, `pm25_roll_7`, `year`, `month`, `day`, `day_of_week`
 
 ---
 
@@ -285,6 +316,52 @@ AirSeva tracks and snaps location queries to these 26 major cities:
 | Bengaluru | Ernakulam | Kolkata | Visakhapatnam |
 | Bhopal | Gurugram | Lucknow | |
 | Brajrajnagar | Guwahati | Mumbai | |
+
+---
+
+## 🔬 CPCB EDA Key Findings
+
+Exploratory analysis of the CPCB dataset (`notebooks/02_eda.ipynb`) surfaced the following:
+
+### Risk-level class distribution (labelled rows only)
+
+| Risk Level | Count | % |
+|---|---|---|
+| Low | 10,052 | 38.6% |
+| Moderate | 9,235 | 35.5% |
+| High | 6,758 | 26.0% |
+
+### Pollutant correlation with AQI (Pearson r)
+
+| Pollutant | r with AQI |
+|---|---|
+| **PM10** | **0.782** ← strongest |
+| CO | 0.645 |
+| PM2.5 | 0.630 |
+| NO2 | 0.518 |
+| SO2 | 0.476 |
+| O3 | 0.192 ← weakest |
+
+**PM10 is the single strongest individual correlate with AQI** in this dataset. O3 (ozone) shows a weak positive correlation, likely reflecting its photochemical origin (high ozone can occur on clean sunny days).
+
+### Seasonal / monthly AQI pattern (all 26 cities combined, median AQI)
+
+| Month | Median AQI | Season |
+|---|---|---|
+| Jan | **184** | Winter peak |
+| Feb | 152 | |
+| Mar | 124 | |
+| Apr | 111 | |
+| May | 111 | |
+| Jun | 97 | |
+| Jul | **85** | Monsoon trough |
+| Aug | 85 | |
+| Sep | 87 | |
+| Oct | 128 | Post-monsoon rise |
+| Nov | **184** | Winter peak |
+| Dec | 182 | |
+
+Pollution follows a clear **bimodal winter pattern** (November–January) driven by temperature inversion, crop residue burning, and reduced dispersion, with a **monsoon trough in July–August** (wet scavenging + reduced industrial activity).
 
 ---
 
